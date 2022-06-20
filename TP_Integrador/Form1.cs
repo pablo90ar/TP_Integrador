@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP_Integrador;
 
-namespace WindowsFormsApp1
+namespace TP_Integrador_app
 {
     public partial class Form1 : Form
     {
@@ -61,7 +62,7 @@ namespace WindowsFormsApp1
         {
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
-            MostrarMenu();
+            ActivarMenu();
         }
 
         private void BtnSalir_Click(object sender, EventArgs e)
@@ -69,7 +70,7 @@ namespace WindowsFormsApp1
             listaBancos.Enabled = true;
             btnCargarBanco.Enabled = true;
             listaSucursales.Items.Clear();
-            OcultarMenu();
+            DesactivarMenu();
         }
 
         private void BtnMenuSaldo_Click(object sender, EventArgs e)
@@ -79,25 +80,29 @@ namespace WindowsFormsApp1
 
         private void BtnMenuOperar_Click(object sender, EventArgs e)
         {
-            OcultarMenu();
+            DesactivarMenu();
+
         }
 
-        private void OcultarMenu()
+        public void DesactivarMenu()
         {
             btnSalir.Enabled = false;
-            label4.Visible = false;
-            btnMenuSaldo.Visible = false;
-            btnMenuOperar.Visible = false;
-            btnMenuCrear.Visible = false;
+            btnMenuSaldo.Enabled = false;
+            btnMenuOperar.Enabled = false;
+            btnMenuCrear.Enabled = false;
         }
 
-        private void MostrarMenu()
+        public void ActivarMenu()
         {
             btnSalir.Enabled = true;
-            label4.Visible = true;
-            btnMenuSaldo.Visible = true;
-            btnMenuOperar.Visible = true;
-            btnMenuCrear.Visible = true;
+            btnMenuSaldo.Enabled = true;
+            btnMenuOperar.Enabled = true;
+            btnMenuCrear.Enabled = true;
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
