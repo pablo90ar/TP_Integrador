@@ -21,7 +21,8 @@ namespace TP_Integrador_app
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var directorio = @"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP_Integrador\bancos\";
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\");
             var bancos = Directory.GetDirectories(directorio);
             foreach (var banco in bancos)
             {
@@ -38,7 +39,8 @@ namespace TP_Integrador_app
             btnCargarBanco.Enabled = false; 
             var indexBancoElegido = listaBancos.SelectedIndex;
             var nombreBanco = listaBancos.Items[indexBancoElegido];
-            var directorio = @"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP_Integrador\bancos\" + nombreBanco + @"\";
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\" + nombreBanco + @"\");
             var archivosFull = Directory.GetFiles(directorio);
             var archivos = new List<string>();
             foreach (var arch in archivosFull)
@@ -63,6 +65,8 @@ namespace TP_Integrador_app
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
             ActivarMenu();
+
+
         }
 
         private void BtnSalir_Click(object sender, EventArgs e)
@@ -103,6 +107,58 @@ namespace TP_Integrador_app
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+        public static string file = @"C:\C#\Clientes.txt";
+        private void btnOperar_Click(object sender, EventArgs e)
+        {
+            TablaDesdeArchivoTXT(file);
+            dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
+        }
+        private DataTable TablaDesdeArchivoTXT(string ubicacion, char separador = '|')
+        {
+            DataTable resultado;
+            ubicacion = file;
+
+            string[] arregloLinea = File.ReadAllLines(ubicacion);
+            resultado = DesdeTabla(arregloLinea, separador);
+            return resultado;
+        }
+        private DataTable DesdeTabla(string[] arregloLinea, char separador)
+        {
+            DataTable dt = new DataTable();
+
+            for (int c = 1; c < arregloLinea.Length; c++)
+            {
+                if (tbCuit.Text==arregloLinea[c])
+                {
+                    AddColumnToTable(arregloLinea, separador, ref dt);
+                    AddRowToTable(arregloLinea, separador, ref dt);
+                }
+            }
+            return dt;
+        }
+        private void AddRowToTable(string[] value, char separador, ref DataTable dt)
+        {
+            for (int i = 1; i < value.Length; i++)
+            {
+                string[] values = value[i].Split(separador);
+                DataRow dr = dt.NewRow();
+                for (int j = 0; j < values.Length; j++)
+                {
+                    dr[j] = values[j];
+                }
+                dt.Rows.Add(dr);
+            }
+        }
+
+        private void AddColumnToTable(string[] columna, char separador, ref DataTable dt)
+        {
+            string[] columnas = columna[0].Split(separador);
+            foreach (string columnaNombre in columnas)
+            {
+                DataColumn dc = new DataColumn(columnaNombre, typeof(string));
+                dt.Columns.Add(dc);
+            }
         }
     }
 }

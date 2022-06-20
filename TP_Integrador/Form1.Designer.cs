@@ -39,9 +39,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnMenuOperar = new System.Windows.Forms.Button();
             this.btnMenuCrear = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbCuit = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnOperar = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // listaBancos
@@ -154,13 +156,13 @@
             this.btnMenuCrear.Text = "Crear Cliente";
             this.btnMenuCrear.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbCuit
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 371);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(115, 20);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.Visible = false;
+            this.tbCuit.Location = new System.Drawing.Point(12, 371);
+            this.tbCuit.Name = "tbCuit";
+            this.tbCuit.Size = new System.Drawing.Size(115, 20);
+            this.tbCuit.TabIndex = 14;
+            this.tbCuit.Visible = false;
             // 
             // label3
             // 
@@ -182,15 +184,25 @@
             this.btnOperar.Text = "Operar";
             this.btnOperar.UseVisualStyleBackColor = true;
             this.btnOperar.Visible = false;
+            this.btnOperar.Click += new System.EventHandler(this.btnOperar_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(156, 25);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(870, 395);
+            this.dataGridView1.TabIndex = 17;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1137, 597);
+            this.ClientSize = new System.Drawing.Size(1042, 597);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnOperar);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbCuit);
             this.Controls.Add(this.btnMenuCrear);
             this.Controls.Add(this.btnMenuOperar);
             this.Controls.Add(this.label4);
@@ -205,6 +217,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,9 +236,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnMenuOperar;
         private System.Windows.Forms.Button btnMenuCrear;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbCuit;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnOperar;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
