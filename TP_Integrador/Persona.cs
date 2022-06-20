@@ -11,10 +11,21 @@ namespace TP_Integrador_app
         string nombre;
         string apellido;
         decimal sueldoNeto;
-        decimal capacidadCredito;
-        List<string> recibosSueldo;
-        public Persona(string cuit) : base(cuit)
+
+        public string Nombre { get => nombre; }
+        public string Apellido { get => apellido; }
+        public decimal SueldoNeto { get => sueldoNeto; set => sueldoNeto = value; }
+
+        public Persona(string cuit, string nombre, string apellido, decimal sueldoNeto, List<Cuenta> cuentas) : base(cuit, cuentas)
         {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.sueldoNeto = sueldoNeto;
+        }
+
+        public string getFullName()
+        {
+            return nombre + " " + apellido;
         }
     }
 }

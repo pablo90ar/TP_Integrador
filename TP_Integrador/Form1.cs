@@ -14,6 +14,8 @@ namespace TP_Integrador_app
 {
     public partial class Form1 : Form
     {
+        Banco banco;
+        Cliente cliente;
         public Form1()
         {
             InitializeComponent();
@@ -22,11 +24,11 @@ namespace TP_Integrador_app
         private void Form1_Load(object sender, EventArgs e)
         {
             string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
-            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\");
-            var bancos = Directory.GetDirectories(directorio);
+            string directorioBancos = Path.Combine(dirProyecto, @"..\..\..\bancos\");
+            var bancos = Directory.GetDirectories(directorioBancos);
             foreach (var banco in bancos)
             {
-                listaBancos.Items.Add(banco.Remove(0,directorio.Length));
+                listaBancos.Items.Add(banco.Remove(0,directorioBancos.Length));
             }
             listaBancos.SelectedIndex = 0;
         }
@@ -40,12 +42,12 @@ namespace TP_Integrador_app
             var indexBancoElegido = listaBancos.SelectedIndex;
             var nombreBanco = listaBancos.Items[indexBancoElegido];
             string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
-            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\" + nombreBanco + @"\");
-            var archivosFull = Directory.GetFiles(directorio);
+            string directorioSucursales = Path.Combine(dirProyecto, @"..\..\..\bancos\" + nombreBanco + @"\");
+            var archivosFull = Directory.GetFiles(directorioSucursales);
             var archivos = new List<string>();
             foreach (var arch in archivosFull)
             {
-                archivos.Add(arch.Remove(0, directorio.Length));
+                archivos.Add(arch.Remove(0, directorioSucursales.Length));
             }
             var listaSucursalesRep = new List<string>();
             foreach (var arch in archivos)
@@ -65,6 +67,7 @@ namespace TP_Integrador_app
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
             ActivarMenu();
+            banco = new Banco(listaBancos.Text, listaSucursales.Text);
         }
 
         private void BtnSalir_Click(object sender, EventArgs e)
@@ -106,7 +109,6 @@ namespace TP_Integrador_app
             btnMenuCrear.Enabled = true;
         }
 
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
             btnOperar.Visible = false;
@@ -114,24 +116,63 @@ namespace TP_Integrador_app
             tbCuit.Visible = false;
             label3.Visible = false;
             ActivarMenu();
+            MostrarDatosCliente(false);
         }
-        public static string file = @"C:\C#\Clientes.txt";
-        private void btnOperar_Click(object sender, EventArgs e)
+
+        private void btnOperarCuit_Click(object sender, EventArgs e)
         {
             var cuitBuscado = tbCuit.Text;
+            cliente = banco.BuscarCliente(cuitBuscado);
+            if (cliente != null)
+            {
+                MostrarDatosCliente(true);
+                if (cliente.GetType() == typeof(Persona))
+                {
+                    Persona clientePersona = (Persona)cliente;
+                    tbxNombreCliente.Text = clientePersona.getFullName();
+                    cliente = clientePersona;
 
-            TablaDesdeArchivoTXT(file);
-            dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
+                    
+                }
+                else if (cliente.GetType() == typeof(Empresa))
+                {
+                    Empresa clienteEmpresa = (Empresa)cliente;
+                    tbxNombreCliente.Text = clienteEmpresa.getFullName();
+                    cliente = clienteEmpresa;
+                }
+                listaCuentasCliente.Items.Clear();
+                foreach (Cuenta cuenta in cliente.Cuentas)
+                {
+                    listaCuentasCliente.Items.Add(cuenta.Nro);
+                }
+                if (cliente.Cuentas.Count > 0)
+                {
+                    listaCuentasCliente.SelectedIndex = 0;
+                }
+            }
+            //TablaDesdeArchivoTXT(file);
+            //dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
         }
+
+        private void MostrarDatosCliente(bool toggle)
+        {
+            tbxNombreCliente.Visible = toggle;
+            listaCuentasCliente.Visible=toggle;
+            listaCuentasCliente.Enabled=toggle;
+            label5.Visible = toggle;
+            label6.Visible = toggle;
+        }
+        // TABLA //
         private DataTable TablaDesdeArchivoTXT(string ubicacion, char separador = '|')
         {
             DataTable resultado;
-            ubicacion = file;
+            //ubicacion = file;
 
             string[] arregloLinea = File.ReadAllLines(ubicacion);
             resultado = DesdeTabla(arregloLinea, separador);
             return resultado;
         }
+
         private DataTable DesdeTabla(string[] arregloLinea, char separador)
         {
             DataTable dt = new DataTable();
@@ -146,6 +187,7 @@ namespace TP_Integrador_app
             }
             return dt;
         }
+        
         private void AddRowToTable(string[] value, char separador, ref DataTable dt)
         {
             for (int i = 1; i < value.Length; i++)
@@ -159,7 +201,7 @@ namespace TP_Integrador_app
                 dt.Rows.Add(dr);
             }
         }
-
+        
         private void AddColumnToTable(string[] columna, char separador, ref DataTable dt)
         {
             string[] columnas = columna[0].Split(separador);
@@ -169,5 +211,12 @@ namespace TP_Integrador_app
                 dt.Columns.Add(dc);
             }
         }
+
+        private void c_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //public static string file = @"C:\C#\Clientes.txt";
     }
 }

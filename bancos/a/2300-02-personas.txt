@@ -1,1 +1,1 @@
-cuit|nombre|apellido|r1|r2|r3|sueldoNeto|
+cuit|nombre|apellido|sueldoNeto|cuentas

@@ -7,35 +7,101 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
-    //esto es un comentario de Emilse
     internal class Banco : IValidar
     {
-        private List<Cliente> clientes;
-        private string nombre;
+        private List<Cliente> clientes = new List<Cliente>();
+        private List<Cuenta> cuentas = new List<Cuenta>();
+        private string nombreBanco;
+        private string nombreSucursal;
 
-        public Banco(string nombre_ingresado)
+        public Banco(string nombreBanco, string nombreSucursal)
         {
-            nombre = nombre_ingresado;
+            this.nombreBanco = nombreBanco;
+            this.nombreSucursal = nombreSucursal;
 
-            using (StreamReader archivo = new StreamReader(@"..\bancos\" + nombre + ".txt"))
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorioSucursales = Path.Combine(dirProyecto, @"..\..\..\bancos\" + this.nombreBanco + @"\");
+
+            using (StreamReader sr_cuentas = new StreamReader(directorioSucursales + nombreSucursal + "-cuentas.txt"))
             {
-                int linea = 0;
+                string datos_cuenta = "";
+                while((datos_cuenta = sr_cuentas.ReadLine()) != null)
+                {
+                    string[] campos = datos_cuenta.Split('|');
+                    string nroCuenta = campos[0];
+                    string tipo = campos[1];
+                    decimal saldo = decimal.Parse(campos[2]);
+                    Cuenta nuevaCuenta;
+                    if (tipo == "O1")
+                    {
+                        decimal descubierto = decimal.Parse(campos[3]);
+                        nuevaCuenta = new CuentaCorriente(nroCuenta, saldo, descubierto);
+                    }
+                    else
+                    {
+                        nuevaCuenta = new CajaAhorro(nroCuenta, saldo);
+                    }
+                    cuentas.Add(nuevaCuenta);
+                }
+            }
+
+            using (StreamReader sr_personas = new StreamReader(directorioSucursales + nombreSucursal + "-personas.txt"))
+            {
                 string datos_cliente = "";
-                while ((datos_cliente = archivo.ReadLine()) != null)
+                while ((datos_cliente = sr_personas.ReadLine()) != null)
                 {
                     string[] campos = datos_cliente.Split('|');
-                    /*
-                    Cliente nuevoCliente = new Cliente(campos[0], campos[1], campos[2], decimal.Parse(campos[3]));
-                    // Si el arreglo esta lleno...
-                    if (linea == clientes.Length)
+                    string cuit = campos[0];
+                    string nombre = campos[1];
+                    string apellido = campos[2];
+                    decimal sueldoNeto = decimal.Parse(campos[3]);
+                    List<string> nrosCuentasCliente = new List<string>(campos[4].Split(','));
+                    List<Cuenta> cuentasCliente = new List<Cuenta>();
+                    foreach (Cuenta cuenta in cuentas)
                     {
-                        Array.Resize(ref clientes, linea + 1);
+                        foreach (string nroCuentaCliente in nrosCuentasCliente)
+                        {
+                            if (int.Parse(nroCuentaCliente) == int.Parse(cuenta.Nro))
+                            {
+                                cuentasCliente.Add(cuenta);
+                            }
+                        }
                     }
-                    clientes[linea] = nuevoCliente;
-                    */
-                    linea++;
+                    Cliente nuevoCliente = new Persona(cuit, nombre, apellido, sueldoNeto, cuentasCliente);
+                    clientes.Add(nuevoCliente);
                 }
+            }
 
+            using (StreamReader sr_empresas = new StreamReader(directorioSucursales + nombreSucursal + "-empresas.txt"))
+            {
+                string datos_cliente = "";
+                while ((datos_cliente = sr_empresas.ReadLine()) != null)
+                {
+                    string[] campos = datos_cliente.Split('|');
+                    string cuit = campos[0];
+                    string razonSocial = campos[1];
+                    bool condIVA = false;
+                    if (campos[2] == "inscripto")
+                    {
+                        condIVA = true;
+                    }
+                    string nroIIBB = campos[3];
+
+                    List<string> nrosCuentasCliente = new List<string>(campos[4].Split(','));
+                    List<Cuenta> cuentasCliente = new List<Cuenta>();
+                    foreach (Cuenta cuenta in cuentas)
+                    {
+                        foreach(string nroCuentaCliente in nrosCuentasCliente)
+                        {
+                            if (int.Parse(nroCuentaCliente) == int.Parse(cuenta.Nro))
+                            {
+                                cuentasCliente.Add(cuenta);
+                            }
+                        }
+                    }
+                    Cliente nuevoCliente = new Empresa(cuit, razonSocial, condIVA, nroIIBB, cuentasCliente);
+                    clientes.Add(nuevoCliente);
+                }
             }
         }
 
@@ -44,8 +110,15 @@ namespace TP_Integrador_app
             return true;
         }
 
-        private Cliente BuscarCliente()
+        public Cliente BuscarCliente(string cuit)
         {
+            foreach (var cliente in clientes)
+            {
+                if (cliente.Cuit == cuit)
+                {
+                    return cliente;
+                }
+            }
             return null;
         }
 
@@ -73,174 +146,5 @@ namespace TP_Integrador_app
         {
             throw new NotImplementedException();
         }
-        /*
-nombre = nombre_ingresado;
-
-using (StreamReader archivo = new StreamReader(@"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP3\" + nombre + ".txt"))
-{
-   int linea = 0;
-   string datos_cliente = "";
-   while ((datos_cliente = archivo.ReadLine()) != null)
-   {
-       string[] campos = datos_cliente.Split('|');
-
-       Cliente nuevoCliente = new Cliente(campos[0], campos[1], campos[2], decimal.Parse(campos[3]));
-       // Si el arreglo esta lleno...
-       if (linea == clientes.Length)
-       {
-           Array.Resize(ref clientes, linea + 1);
-       }
-       clientes[linea] = nuevoCliente;
-
-       linea++;
-   }
-
-}
-
-public bool AgregarCliente(string nombre, string apellido, string cuit)
-{
-
-// Controla si un cuit existe o no detro de la cartera de clientes
-bool NuevoCuitEsUnico(string nuevo_cuit)
-{
-   bool result = true;
-   foreach (Cliente cliente in clientes)
-   {
-       if (cliente.Cuit == nuevo_cuit)
-       {
-           result = false;
-       }
-   }
-   return result;
-}
-
-// Validar la entrada
-// @nombre, @apellido string sin numero ni caracteres especiales
-// @cuit string de 11 numeros sin símbolos
-
-bool error = false;
-
-if (!ValidarString(nombre))
-{
-   Console.WriteLine("Nombre inválido");
-   error = true;
-}
-else if (!ValidarString(apellido))
-{
-   Console.WriteLine("Apellido inválido");
-   error = true;
-}
-else if (!ValidarCuit(cuit))
-{
-   Console.WriteLine("CUIT inválido");
-   error = true;
-}
-else if (!NuevoCuitEsUnico(cuit))
-{
-   Console.WriteLine("El CUIT ingresado ya pertenece a un usuario");
-   error = true;
-}
-// Si no hay error...
-if (!error)
-{
-   //Instancia un cliente
-   Cliente nuevoCliente = new Cliente(nombre, apellido, cuit);
-   // Agranda el arreglo
-   Array.Resize(ref clientes, clientes.Length + 1);
-   // Inserta el cliente en la una posicion vacía del arreglo
-   clientes[clientes.Length - 1] = nuevoCliente;
-   // Informa estado actual del banco
-   Console.WriteLine("\nCantidad actualizada de clientes del banco: " + clientes.Length + " clientes.");
-   Console.WriteLine("Saldo en Tesorería: $" + SaldoActualTesoreria());
-   return true;
-}
-else
-{
-   return false;
-}
-
-}
-
-public decimal SaldoActualTesoreria()
-{
-decimal saldo = 0;
-foreach (Cliente cliente in clientes)
-{
-   if (cliente != null)
-   {
-       saldo += cliente.Saldo();
-   }
-   else
-   {
-       break;
-   }
-}
-return saldo;
-}
-
-public Cliente OperarCliente(string cuitBuscado)
-{
-foreach (Cliente cliente in clientes)
-{
-   if (cliente.Cuit == cuitBuscado)
-   {
-       return cliente;
-   }
-}
-return null;
-}
-
-public void Cerrar()
-{
-Console.Clear();
-Console.WriteLine("Saliendo...\n\nSaldo total en tesorería del banco: " + SaldoActualTesoreria());
-Console.ReadLine();
-void PersistirClientes()
-{
-   Console.WriteLine("\nPersisitiendo listado de clientes del banco.");
-   string[] lineas_clientes = new string[clientes.Length];
-   for (int i = 0; i < clientes.Length; i++)
-   {
-       lineas_clientes[i] = clientes[i].Nombre + "|" + clientes[i].Apellido + "|" + clientes[i].Cuit + "|" + clientes[i].Monto.ToString();
-       File.WriteAllLines(@"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP3\" + nombre + ".txt", lineas_clientes);
-   }
-}
-PersistirClientes();
-}
-
-public bool ValidarString(string texto)
-{
-return Regex.IsMatch(texto, @"^[a-zA-Z]+$");
-}
-
-public bool ValidarCuit(string cuit)
-{
-if (string.IsNullOrEmpty(cuit)) throw new ArgumentNullException(nameof(cuit));
-if (cuit.Length != 13) throw new ArgumentException(nameof(cuit));
-bool rv = false;
-int verificador;
-int resultado = 0;
-string cuit_nro = cuit.Replace("-", string.Empty);
-string codes = "6789456789";
-long cuit_long = 0;
-if (long.TryParse(cuit_nro, out cuit_long))
-{
-   verificador = int.Parse(cuit_nro[cuit_nro.Length - 1].ToString());
-   int x = 0;
-   while (x < 10)
-   {
-       int digitoValidador = int.Parse(codes.Substring((x), 1));
-       int digito = int.Parse(cuit_nro.Substring((x), 1));
-       int digitoValidacion = digitoValidador * digito;
-       resultado += digitoValidacion;
-       x++;
-   }
-   resultado = resultado % 11;
-   rv = (resultado == verificador);
-}
-return rv;
-
-}
-*/
     }
 }

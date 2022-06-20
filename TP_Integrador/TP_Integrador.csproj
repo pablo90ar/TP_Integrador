@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Banco.cs" />
     <Compile Include="CajaAhorro.cs" />
+    <Compile Include="PlazoFijo.cs" />
     <Compile Include="CuentaCorriente.cs" />
     <Compile Include="Cuenta.cs" />
     <Compile Include="Empresa.cs" />
