@@ -108,17 +108,71 @@ namespace TP_Integrador_app
             btnMenuCrear.Enabled = true;
         }
 
-
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            btnOperar.Visible = false;
+            btnVolver.Visible=false;
+            tbCuit.Visible = false;
+            label3.Visible = false;
+            ActivarMenu();
+        }
+        public static string file = @"C:\C#\Clientes.txt";
         private void btnOperar_Click(object sender, EventArgs e)
         {
-            var cuitBuscado = tbCuit.Text;
+            TablaDesdeArchivoTXT(file);
+            dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
+        }
+        private DataTable TablaDesdeArchivoTXT(string ubicacion, char separador = '|')
+        {
+            DataTable resultado;
+            ubicacion = file;
 
+            string[] arregloLinea = File.ReadAllLines(ubicacion);
+            resultado = DesdeTabla(arregloLinea, separador);
+            return resultado;
+        }
+        private DataTable DesdeTabla(string[] arregloLinea, char separador)
+        {
+            DataTable dt = new DataTable();
+
+            for (int c = 1; c < arregloLinea.Length; c++)
+            {
+                if (tbCuit.Text==arregloLinea[c])
+                {
+                    AddColumnToTable(arregloLinea, separador, ref dt);
+                    AddRowToTable(arregloLinea, separador, ref dt);
+                }
+            }
+            return dt;
+        }
+        private void AddRowToTable(string[] value, char separador, ref DataTable dt)
+        {
+            for (int i = 1; i < value.Length; i++)
+            {
+                string[] values = value[i].Split(separador);
+                DataRow dr = dt.NewRow();
+                for (int j = 0; j < values.Length; j++)
+                {
+                    dr[j] = values[j];
+                }
+                dt.Rows.Add(dr);
+            }
+        }
+
+        private void AddColumnToTable(string[] columna, char separador, ref DataTable dt)
+        {
+            string[] columnas = columna[0].Split(separador);
+            foreach (string columnaNombre in columnas)
+            {
+                DataColumn dc = new DataColumn(columnaNombre, typeof(string));
+                dt.Columns.Add(dc);
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
             btnOperar.Visible = false;
-            btnVolver.Visible=false;
+            btnVolver.Visible = false;
             tbCuit.Visible = false;
             label3.Visible = false;
             ActivarMenu();

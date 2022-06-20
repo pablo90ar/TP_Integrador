@@ -44,6 +44,7 @@
             this.btnOperar = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -205,6 +206,14 @@
             this.btnVolver.Visible = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(143, 25);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +222,7 @@
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dataGridView1);
             this.ClientSize = new System.Drawing.Size(1137, 597);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnOperar);
             this.Controls.Add(this.label3);
@@ -255,6 +265,7 @@
         private System.Windows.Forms.Button btnOperar;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
