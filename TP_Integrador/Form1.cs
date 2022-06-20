@@ -109,12 +109,6 @@ namespace TP_Integrador_app
         }
 
 
-        private void btnOperar_Click(object sender, EventArgs e)
-        {
-            var cuitBuscado = tbCuit.Text;
-
-        }
-
         private void btnVolver_Click(object sender, EventArgs e)
         {
             btnOperar.Visible = false;
@@ -126,6 +120,7 @@ namespace TP_Integrador_app
         public static string file = @"C:\C#\Clientes.txt";
         private void btnOperar_Click(object sender, EventArgs e)
         {
+            var cuitBuscado = tbCuit.Text;
             TablaDesdeArchivoTXT(file);
             dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
         }
@@ -174,15 +169,6 @@ namespace TP_Integrador_app
                 DataColumn dc = new DataColumn(columnaNombre, typeof(string));
                 dt.Columns.Add(dc);
             }
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            btnOperar.Visible = false;
-            btnVolver.Visible = false;
-            tbCuit.Visible = false;
-            label3.Visible = false;
-            ActivarMenu();
         }
     }
 }
