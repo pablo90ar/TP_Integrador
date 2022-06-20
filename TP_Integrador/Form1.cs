@@ -65,8 +65,6 @@ namespace TP_Integrador_app
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
             ActivarMenu();
-
-
         }
 
         private void BtnSalir_Click(object sender, EventArgs e)
@@ -121,6 +119,7 @@ namespace TP_Integrador_app
         private void btnOperar_Click(object sender, EventArgs e)
         {
             var cuitBuscado = tbCuit.Text;
+
             TablaDesdeArchivoTXT(file);
             dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
         }
