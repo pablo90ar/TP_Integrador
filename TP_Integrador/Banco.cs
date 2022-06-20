@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
+    //esto es un comentario de Emilse
     internal class Banco : IValidar
     {
         private List<Cliente> clientes;
