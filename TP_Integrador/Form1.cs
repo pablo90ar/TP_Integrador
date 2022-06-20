@@ -85,6 +85,10 @@ namespace TP_Integrador_app
         private void BtnMenuOperar_Click(object sender, EventArgs e)
         {
             DesactivarMenu();
+            label3.Visible = true;
+            tbCuit.Visible = true;
+            btnOperar.Visible = true;
+            btnVolver.Visible = true;
 
         }
 
@@ -159,6 +163,15 @@ namespace TP_Integrador_app
                 DataColumn dc = new DataColumn(columnaNombre, typeof(string));
                 dt.Columns.Add(dc);
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            btnOperar.Visible = false;
+            btnVolver.Visible = false;
+            tbCuit.Visible = false;
+            label3.Visible = false;
+            ActivarMenu();
         }
     }
 }
