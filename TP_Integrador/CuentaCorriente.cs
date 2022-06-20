@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
-    internal class CuentaCorriente : ICuenta
+    internal class CuentaCorriente : Cuenta, ICuenta
     {
         private decimal montoDescubierto;
+
+        public CuentaCorriente(string nroCuenta, decimal saldo, decimal montoDescubierto) : base(nroCuenta, saldo)
+        {
+            this.montoDescubierto = montoDescubierto;
+        }
+
         public bool IniciarPlazoFijo(decimal monto, int plazo)
         {
             throw new NotImplementedException();

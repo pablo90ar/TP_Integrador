@@ -44,6 +44,10 @@
             this.btnOperar = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbxNombreCliente = new System.Windows.Forms.TextBox();
+            this.listaCuentasCliente = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -159,7 +163,7 @@
             // 
             // tbCuit
             // 
-            this.tbCuit.Location = new System.Drawing.Point(12, 371);
+            this.tbCuit.Location = new System.Drawing.Point(12, 384);
             this.tbCuit.Name = "tbCuit";
             this.tbCuit.Size = new System.Drawing.Size(115, 20);
             this.tbCuit.TabIndex = 14;
@@ -168,7 +172,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 355);
+            this.label3.Location = new System.Drawing.Point(15, 368);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 15;
@@ -177,26 +181,26 @@
             // 
             // btnOperar
             // 
-            this.btnOperar.Location = new System.Drawing.Point(12, 397);
+            this.btnOperar.Location = new System.Drawing.Point(12, 410);
             this.btnOperar.Name = "btnOperar";
             this.btnOperar.Size = new System.Drawing.Size(115, 23);
             this.btnOperar.TabIndex = 16;
             this.btnOperar.Text = "Operar";
             this.btnOperar.UseVisualStyleBackColor = true;
             this.btnOperar.Visible = false;
-            this.btnOperar.Click += new System.EventHandler(this.btnOperar_Click);
+            this.btnOperar.Click += new System.EventHandler(this.btnOperarCuit_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(156, 25);
+            this.dataGridView1.Location = new System.Drawing.Point(1043, 9);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(870, 395);
+            this.dataGridView1.Size = new System.Drawing.Size(276, 395);
             this.dataGridView1.TabIndex = 17;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(12, 426);
+            this.btnVolver.Location = new System.Drawing.Point(12, 439);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(115, 23);
             this.btnVolver.TabIndex = 17;
@@ -205,14 +209,56 @@
             this.btnVolver.Visible = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(177, 33);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Nombre";
+            this.label5.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(177, 61);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(46, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Cuentas";
+            this.label6.Visible = false;
+            // 
+            // tbxNombreCliente
+            // 
+            this.tbxNombreCliente.Enabled = false;
+            this.tbxNombreCliente.Location = new System.Drawing.Point(227, 30);
+            this.tbxNombreCliente.Name = "tbxNombreCliente";
+            this.tbxNombreCliente.Size = new System.Drawing.Size(147, 20);
+            this.tbxNombreCliente.TabIndex = 20;
+            this.tbxNombreCliente.Visible = false;
+            this.tbxNombreCliente.TextChanged += new System.EventHandler(this.c_TextChanged);
+            // 
+            // listaCuentasCliente
+            // 
+            this.listaCuentasCliente.Enabled = false;
+            this.listaCuentasCliente.FormattingEnabled = true;
+            this.listaCuentasCliente.Location = new System.Drawing.Point(227, 58);
+            this.listaCuentasCliente.Name = "listaCuentasCliente";
+            this.listaCuentasCliente.Size = new System.Drawing.Size(147, 21);
+            this.listaCuentasCliente.TabIndex = 22;
+            this.listaCuentasCliente.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1042, 597);
-            this.Controls.Add(this.btnVolver);
+            this.ClientSize = new System.Drawing.Size(1331, 693);
+            this.Controls.Add(this.listaCuentasCliente);
+            this.Controls.Add(this.tbxNombreCliente);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
-            this.ClientSize = new System.Drawing.Size(1137, 597);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnOperar);
             this.Controls.Add(this.label3);
@@ -255,6 +301,10 @@
         private System.Windows.Forms.Button btnOperar;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbxNombreCliente;
+        private System.Windows.Forms.ComboBox listaCuentasCliente;
     }
 }
 

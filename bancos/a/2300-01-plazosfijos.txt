@@ -1,0 +1,1 @@
+nroCuenta|monto|inicio|duracion

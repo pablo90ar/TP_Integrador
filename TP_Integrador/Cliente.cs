@@ -11,11 +11,13 @@ namespace TP_Integrador_app
         private string cuit;
         private List<Cuenta> cuentas;
 
-        public string Cuit { get => cuit; set => cuit = value; }
+        public string Cuit { get => cuit; }
+        public List<Cuenta> Cuentas { get => cuentas; }
 
-        public Cliente(string cuit)
+        public Cliente(string cuit, List<Cuenta> cuentas)
         {
-            Cuit = cuit;
+            this.cuit = cuit;
+            this.cuentas = cuentas;
         }
 
         public bool CrearCuenta()
@@ -23,7 +25,12 @@ namespace TP_Integrador_app
             return true;
         }
 
-        public decimal Saldo()
+        public bool AgregarTitular(Cliente nuevoTitular, Cuenta cuenta)
+        {
+            return true;
+        }
+
+        public decimal Saldo(string nroCuenta)
         {
             return 0;
         }
