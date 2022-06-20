@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1
+namespace TP_Integrador_app
 {
     //esto es un comentario de Emilse
     internal class Banco : IValidar
@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         {
             nombre = nombre_ingresado;
 
-            using (StreamReader archivo = new StreamReader(@"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP3_Parte_2\bancos\" + nombre + ".txt"))
+            using (StreamReader archivo = new StreamReader(@"..\bancos\" + nombre + ".txt"))
             {
                 int linea = 0;
                 string datos_cliente = "";
