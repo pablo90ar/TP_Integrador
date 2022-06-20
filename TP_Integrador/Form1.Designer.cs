@@ -39,9 +39,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnMenuOperar = new System.Windows.Forms.Button();
             this.btnMenuCrear = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbCuit = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnOperar = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listaBancos
@@ -154,13 +155,13 @@
             this.btnMenuCrear.Text = "Crear Cliente";
             this.btnMenuCrear.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbCuit
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 371);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(115, 20);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.Visible = false;
+            this.tbCuit.Location = new System.Drawing.Point(12, 371);
+            this.tbCuit.Name = "tbCuit";
+            this.tbCuit.Size = new System.Drawing.Size(115, 20);
+            this.tbCuit.TabIndex = 14;
+            this.tbCuit.Visible = false;
             // 
             // label3
             // 
@@ -171,7 +172,6 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "CUIT";
             this.label3.Visible = false;
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnOperar
             // 
@@ -182,15 +182,28 @@
             this.btnOperar.Text = "Operar";
             this.btnOperar.UseVisualStyleBackColor = true;
             this.btnOperar.Visible = false;
+            this.btnOperar.Click += new System.EventHandler(this.btnOperar_Click);
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Location = new System.Drawing.Point(12, 426);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(115, 23);
+            this.btnVolver.TabIndex = 17;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Visible = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1137, 597);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnOperar);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbCuit);
             this.Controls.Add(this.btnMenuCrear);
             this.Controls.Add(this.btnMenuOperar);
             this.Controls.Add(this.label4);
@@ -223,9 +236,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnMenuOperar;
         private System.Windows.Forms.Button btnMenuCrear;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbCuit;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnOperar;
+        private System.Windows.Forms.Button btnVolver;
     }
 }
 

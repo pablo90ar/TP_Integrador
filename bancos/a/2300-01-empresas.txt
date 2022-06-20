@@ -1,6 +1,6 @@
 30-68438692-8|Grana SA|inscripto|9217445161|1
-30-50457726-7|Mahle SA|inscripto|9217405553|1,2
-30-50462425-7|Basso SA|inscripto|9217403524|1,2,3
+30-50457726-7|Mahle SA|inscripto|9217405553|2
+30-50462425-7|Basso SA|inscripto|9217403524|3
 30-52138786-2|Cormoran SA|inscripto|9217408300|4
 30-50160121-3|Suc. de Alfredo Williner SA|inscripto|9217403609|5
 30-57301217-4|Club 9 de Julio|exento|0410408593|6
