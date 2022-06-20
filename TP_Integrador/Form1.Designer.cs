@@ -35,10 +35,10 @@
             this.btnCargarSuc = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSalir = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnAcceder = new System.Windows.Forms.Button();
+            this.btnMenuSaldo = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnMenuOperar = new System.Windows.Forms.Button();
+            this.btnMenuCrear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listaBancos
@@ -58,7 +58,7 @@
             this.btnCargarBanco.TabIndex = 2;
             this.btnCargarBanco.Text = "Abrir Banco";
             this.btnCargarBanco.UseVisualStyleBackColor = true;
-            this.btnCargarBanco.Click += new System.EventHandler(this.btnCargarBanco_Click);
+            this.btnCargarBanco.Click += new System.EventHandler(this.BtnCargarBanco_Click);
             // 
             // listaSucursales
             // 
@@ -88,7 +88,7 @@
             this.btnCargarSuc.TabIndex = 5;
             this.btnCargarSuc.Text = "Abrir Sucursal";
             this.btnCargarSuc.UseVisualStyleBackColor = true;
-            this.btnCargarSuc.Click += new System.EventHandler(this.btnCargarSucursal_Click);
+            this.btnCargarSuc.Click += new System.EventHandler(this.BtnCargarSucursal_Click);
             // 
             // label2
             // 
@@ -108,52 +108,59 @@
             this.btnSalir.TabIndex = 7;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
-            // textBox1
+            // btnMenuSaldo
             // 
-            this.textBox1.Location = new System.Drawing.Point(63, 133);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(112, 20);
-            this.textBox1.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 136);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "CUIT";
-            // 
-            // btnAcceder
-            // 
-            this.btnAcceder.Location = new System.Drawing.Point(181, 133);
-            this.btnAcceder.Name = "btnAcceder";
-            this.btnAcceder.Size = new System.Drawing.Size(82, 20);
-            this.btnAcceder.TabIndex = 10;
-            this.btnAcceder.Text = "Acceder";
-            this.btnAcceder.UseVisualStyleBackColor = true;
-            this.btnAcceder.Click += new System.EventHandler(this.button1_Click);
+            this.btnMenuSaldo.Location = new System.Drawing.Point(298, 167);
+            this.btnMenuSaldo.Name = "btnMenuSaldo";
+            this.btnMenuSaldo.Size = new System.Drawing.Size(190, 41);
+            this.btnMenuSaldo.TabIndex = 10;
+            this.btnMenuSaldo.Text = "Saldo Tesorería";
+            this.btnMenuSaldo.UseVisualStyleBackColor = true;
+            this.btnMenuSaldo.Visible = false;
+            this.btnMenuSaldo.Click += new System.EventHandler(this.BtnMenuSaldo_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 109);
+            this.label4.Location = new System.Drawing.Point(354, 142);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Operar Cliente";
+            this.label4.Text = "Menú Principal";
+            this.label4.Visible = false;
+            // 
+            // btnMenuOperar
+            // 
+            this.btnMenuOperar.Location = new System.Drawing.Point(298, 214);
+            this.btnMenuOperar.Name = "btnMenuOperar";
+            this.btnMenuOperar.Size = new System.Drawing.Size(190, 41);
+            this.btnMenuOperar.TabIndex = 12;
+            this.btnMenuOperar.Text = "Operar Cliente";
+            this.btnMenuOperar.UseVisualStyleBackColor = true;
+            this.btnMenuOperar.Visible = false;
+            this.btnMenuOperar.Click += new System.EventHandler(this.BtnMenuOperar_Click);
+            // 
+            // btnMenuCrear
+            // 
+            this.btnMenuCrear.Location = new System.Drawing.Point(298, 261);
+            this.btnMenuCrear.Name = "btnMenuCrear";
+            this.btnMenuCrear.Size = new System.Drawing.Size(190, 41);
+            this.btnMenuCrear.TabIndex = 13;
+            this.btnMenuCrear.Text = "Crear Cliente";
+            this.btnMenuCrear.UseVisualStyleBackColor = true;
+            this.btnMenuCrear.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnMenuCrear);
+            this.Controls.Add(this.btnMenuOperar);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.btnAcceder);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnMenuSaldo);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnCargarSuc);
@@ -178,10 +185,10 @@
         private System.Windows.Forms.Button btnCargarSuc;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnAcceder;
+        private System.Windows.Forms.Button btnMenuSaldo;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnMenuOperar;
+        private System.Windows.Forms.Button btnMenuCrear;
     }
 }
 

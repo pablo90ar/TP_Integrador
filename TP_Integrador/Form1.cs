@@ -29,7 +29,7 @@ namespace WindowsFormsApp1
             listaBancos.SelectedIndex = 0;
         }
 
-        private void btnCargarBanco_Click(object sender, EventArgs e)
+        private void BtnCargarBanco_Click(object sender, EventArgs e)
         {
             listaSucursales.Enabled = true;
             btnCargarSuc.Enabled = true;
@@ -57,24 +57,47 @@ namespace WindowsFormsApp1
             listaSucursales.SelectedIndex = 0;
         }
 
-        private void btnCargarSucursal_Click(object sender, EventArgs e)
+        private void BtnCargarSucursal_Click(object sender, EventArgs e)
         {
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
-            btnSalir.Enabled = true;
+            MostrarMenu();
         }
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        private void BtnSalir_Click(object sender, EventArgs e)
         {
             listaBancos.Enabled = true;
             btnCargarBanco.Enabled = true;
-            btnSalir.Enabled = false;
             listaSucursales.Items.Clear();
+            OcultarMenu();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BtnMenuSaldo_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Saldo en tesorería: $400.00", "Tesorería");
+        }
 
+        private void BtnMenuOperar_Click(object sender, EventArgs e)
+        {
+            OcultarMenu();
+        }
+
+        private void OcultarMenu()
+        {
+            btnSalir.Enabled = false;
+            label4.Visible = false;
+            btnMenuSaldo.Visible = false;
+            btnMenuOperar.Visible = false;
+            btnMenuCrear.Visible = false;
+        }
+
+        private void MostrarMenu()
+        {
+            btnSalir.Enabled = true;
+            label4.Visible = true;
+            btnMenuSaldo.Visible = true;
+            btnMenuOperar.Visible = true;
+            btnMenuCrear.Visible = true;
         }
     }
 }
