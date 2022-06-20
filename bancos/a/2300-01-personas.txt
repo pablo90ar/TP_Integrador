@@ -1,0 +1,10 @@
+20-48708306-3|Bruno|Gutierrez|r1|r2|r3|200034,0|1
+23-22377139-4|Ángela|Aquino|r1|r2|r3|460058,0|1,2
+20-38874615-8|Aníbal|Fernandez|r1|r2|r3|480923,0|1,2,3
+20-23510970-1|Javier|Rossini|r1|r2|r3|806440,0|4
+20-42871555-2|Rodrigo|Juarez|r1|r2|r3|180305,0|5
+20-38999642-5|Lucas|Mondino|r1|r2|r3|56040,0|6
+27-12697282-8|Lucía|Ortiz|r1|r2|r3|192348,0|7
+27-17882646-3|Claudia|Cagliero|r1|r2|r3|105600,0|8
+20-20189777-8|Gabriel|Olivera|r1|r2|r3|604884,0|9
+20-22989147-3|Rogelio|Fernandez|r1|r2|r3|489156,0|10

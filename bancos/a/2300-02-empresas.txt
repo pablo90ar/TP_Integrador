@@ -1,0 +1,3 @@
+cuit|razonSocial|condicionIva|nroIIBB|actaSocios(nombre PDF)|ultimoBalance
+acta_banco_sucursal_cuit.pdf
+balance_banco_sucursal_cuit.pdf

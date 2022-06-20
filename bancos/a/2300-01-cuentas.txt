@@ -1,0 +1,1 @@
+nroCuenta|tipoCuenta|saldo|montoPF|inicioPF|duracionPF|montoDescubierto
