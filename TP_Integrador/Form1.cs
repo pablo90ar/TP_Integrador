@@ -108,9 +108,20 @@ namespace TP_Integrador_app
             btnMenuCrear.Enabled = true;
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
 
+        private void btnOperar_Click(object sender, EventArgs e)
+        {
+            var cuitBuscado = tbCuit.Text;
+
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            btnOperar.Visible = false;
+            btnVolver.Visible=false;
+            tbCuit.Visible = false;
+            label3.Visible = false;
+            ActivarMenu();
         }
         public static string file = @"C:\C#\Clientes.txt";
         private void btnOperar_Click(object sender, EventArgs e)

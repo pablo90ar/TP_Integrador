@@ -174,7 +174,6 @@
             this.label3.TabIndex = 15;
             this.label3.Text = "CUIT";
             this.label3.Visible = false;
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnOperar
             // 
@@ -200,7 +199,7 @@
             this.btnVolver.Location = new System.Drawing.Point(12, 426);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(115, 23);
-            this.btnVolver.TabIndex = 18;
+            this.btnVolver.TabIndex = 17;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Visible = false;
@@ -213,6 +212,8 @@
             this.ClientSize = new System.Drawing.Size(1042, 597);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dataGridView1);
+            this.ClientSize = new System.Drawing.Size(1137, 597);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnOperar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbCuit);
