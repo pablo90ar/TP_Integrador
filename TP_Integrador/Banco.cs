@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
+    //esto es un comentario de Emilse
     internal class Banco : IValidar
     {
         private List<Cliente> clientes;
