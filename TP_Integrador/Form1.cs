@@ -21,7 +21,8 @@ namespace TP_Integrador_app
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var directorio = @"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP_Integrador\bancos\";
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\");
             var bancos = Directory.GetDirectories(directorio);
             foreach (var banco in bancos)
             {
@@ -38,7 +39,8 @@ namespace TP_Integrador_app
             btnCargarBanco.Enabled = false; 
             var indexBancoElegido = listaBancos.SelectedIndex;
             var nombreBanco = listaBancos.Items[indexBancoElegido];
-            var directorio = @"D:\Drive\UTN\_Programacion 3\Práctica\Proyectos VS\TP_Integrador\bancos\" + nombreBanco + @"\";
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorio = Path.Combine(dirProyecto, @"..\..\..\bancos\" + nombreBanco + @"\");
             var archivosFull = Directory.GetFiles(directorio);
             var archivos = new List<string>();
             foreach (var arch in archivosFull)
@@ -81,6 +83,10 @@ namespace TP_Integrador_app
         private void BtnMenuOperar_Click(object sender, EventArgs e)
         {
             DesactivarMenu();
+            label3.Visible = true;
+            tbCuit.Visible = true;
+            btnOperar.Visible = true;
+            btnVolver.Visible = true;
 
         }
 
@@ -100,9 +106,20 @@ namespace TP_Integrador_app
             btnMenuCrear.Enabled = true;
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
 
+        private void btnOperar_Click(object sender, EventArgs e)
+        {
+            var cuitBuscado = tbCuit.Text;
+
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            btnOperar.Visible = false;
+            btnVolver.Visible=false;
+            tbCuit.Visible = false;
+            label3.Visible = false;
+            ActivarMenu();
         }
     }
 }
