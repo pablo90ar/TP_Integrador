@@ -12,6 +12,9 @@ namespace TP_Integrador
         private DateTime fechaInicio;
         private int duracion;
 
+        public decimal Monto { get => monto; }
+        public DateTime FechaInicio { get => fechaInicio; }
+        public int Duracion { get => duracion; }
         public PlazoFijo (decimal monto, int duracion)
         {
             this.monto = monto;

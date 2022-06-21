@@ -16,6 +16,8 @@ namespace TP_Integrador_app
     {
         Banco banco;
         Cliente cliente;
+        Cuenta cuenta;
+        int operacion;
         public Form1()
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace TP_Integrador_app
             var bancos = Directory.GetDirectories(directorioBancos);
             foreach (var banco in bancos)
             {
-                listaBancos.Items.Add(banco.Remove(0,directorioBancos.Length));
+                listaBancos.Items.Add(banco.Remove(0, directorioBancos.Length));
             }
             listaBancos.SelectedIndex = 0;
         }
@@ -38,7 +40,7 @@ namespace TP_Integrador_app
             listaSucursales.Enabled = true;
             btnCargarSuc.Enabled = true;
             listaBancos.Enabled = false;
-            btnCargarBanco.Enabled = false; 
+            btnCargarBanco.Enabled = false;
             var indexBancoElegido = listaBancos.SelectedIndex;
             var nombreBanco = listaBancos.Items[indexBancoElegido];
             string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
@@ -66,7 +68,7 @@ namespace TP_Integrador_app
         {
             listaSucursales.Enabled = false;
             btnCargarSuc.Enabled = false;
-            ActivarMenu();
+            ActivarMenu(true);
             banco = new Banco(listaBancos.Text, listaSucursales.Text);
         }
 
@@ -75,7 +77,7 @@ namespace TP_Integrador_app
             listaBancos.Enabled = true;
             btnCargarBanco.Enabled = true;
             listaSucursales.Items.Clear();
-            DesactivarMenu();
+            ActivarMenu(false);
         }
 
         private void BtnMenuSaldo_Click(object sender, EventArgs e)
@@ -85,43 +87,42 @@ namespace TP_Integrador_app
 
         private void BtnMenuOperar_Click(object sender, EventArgs e)
         {
-            DesactivarMenu();
+            ActivarMenu(false);
             label3.Visible = true;
-            tbCuit.Visible = true;
-            btnOperar.Visible = true;
-            btnVolver.Visible = true;
+            tbCuitBuscado.Visible = true;
+            btnOperarCliente.Visible = true;
+            btnVolverAlBanco.Visible = true;
 
         }
 
-        public void DesactivarMenu()
+        public void ActivarMenu(bool toogle)
         {
-            btnSalir.Enabled = false;
-            btnMenuSaldo.Enabled = false;
-            btnMenuOperar.Enabled = false;
-            btnMenuCrear.Enabled = false;
+            btnSalir.Enabled = toogle;
+            btnMenuSaldo.Enabled = toogle;
+            btnMenuOperar.Enabled = toogle;
+            btnMenuCrear.Enabled = toogle;
         }
 
-        public void ActivarMenu()
+        private void BtnVolver_Click(object sender, EventArgs e)
         {
-            btnSalir.Enabled = true;
-            btnMenuSaldo.Enabled = true;
-            btnMenuOperar.Enabled = true;
-            btnMenuCrear.Enabled = true;
-        }
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            btnOperar.Visible = false;
-            btnVolver.Visible=false;
-            tbCuit.Visible = false;
+            btnOperarCliente.Visible = false;
+            btnOperarCliente.Enabled = true;
+            btnOperarCuenta.Enabled = true;
+            btnVolverAlBanco.Visible = false;
+            tbCuitBuscado.Enabled = true;
+            tbCuitBuscado.Visible = false;
+            tbCuitBuscado.Text = "";
             label3.Visible = false;
-            ActivarMenu();
+            grupoCuenta.Visible = false;
+            grupoMovimientos.Visible = false;
+            grupoPlazoFijo.Visible = false;
+            ActivarMenu(true);
             MostrarDatosCliente(false);
         }
 
-        private void btnOperarCuit_Click(object sender, EventArgs e)
+        private void BtnOperarCliente_Click(object sender, EventArgs e)
         {
-            var cuitBuscado = tbCuit.Text;
+            var cuitBuscado = tbCuitBuscado.Text;
             cliente = banco.BuscarCliente(cuitBuscado);
             if (cliente != null)
             {
@@ -131,8 +132,6 @@ namespace TP_Integrador_app
                     Persona clientePersona = (Persona)cliente;
                     tbxNombreCliente.Text = clientePersona.getFullName();
                     cliente = clientePersona;
-
-                    
                 }
                 else if (cliente.GetType() == typeof(Empresa))
                 {
@@ -143,12 +142,19 @@ namespace TP_Integrador_app
                 listaCuentasCliente.Items.Clear();
                 foreach (Cuenta cuenta in cliente.Cuentas)
                 {
-                    listaCuentasCliente.Items.Add(cuenta.Nro);
+                    string tipo;
+                    _ = cuenta.GetType() == typeof(CuentaCorriente) ? tipo = "01" : tipo = "02";
+                    listaCuentasCliente.Items.Add(banco.NombreSucursal + "-" + cuenta.Nro + "-" + tipo);
                 }
-                if (cliente.Cuentas.Count > 0)
-                {
-                    listaCuentasCliente.SelectedIndex = 0;
-                }
+                listaCuentasCliente.SelectedIndex = 0;
+                montoCuenta.Text = LeerMontoCuenta(0).ToString();
+                btnOperarCliente.Enabled = false;
+                tbCuitBuscado.Enabled = false;
+                grupoCuenta.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("No se encontró el cliente con ese CUIT", "Error");
             }
             //TablaDesdeArchivoTXT(file);
             //dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
@@ -157,11 +163,70 @@ namespace TP_Integrador_app
         private void MostrarDatosCliente(bool toggle)
         {
             tbxNombreCliente.Visible = toggle;
-            listaCuentasCliente.Visible=toggle;
-            listaCuentasCliente.Enabled=toggle;
+            listaCuentasCliente.Visible = toggle;
+            listaCuentasCliente.Enabled = toggle;
             label5.Visible = toggle;
             label6.Visible = toggle;
+            label7.Visible = toggle;
+            label8.Visible = toggle;
+            btnOperarCuenta.Visible = toggle;
+            montoCuenta.Visible = toggle;
+            grupoCuenta.Visible=toggle;
+            montoDisponible.Visible = toggle;
         }
+
+        private decimal LeerMontoCuenta(int index)
+        {
+            return cliente.Cuentas[index].Saldo;
+        }
+
+        private decimal LeerMontoPlazoFijo(int index)
+        {
+            PlazoFijo plazoFijo = cliente.Cuentas[index].PlazoFijo;
+
+            if (plazoFijo != null)
+            {
+                return plazoFijo.Monto;
+            }
+            return 0;
+        }
+
+        private void ListaCuentasCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = listaCuentasCliente.SelectedIndex;
+            montoCuenta.Text = LeerMontoCuenta(index).ToString();
+            montoDisponible.Text = (decimal.Parse(montoCuenta.Text) - LeerMontoPlazoFijo(index)).ToString();
+        }
+
+        private void BtnOperarCuenta_Click(object sender, EventArgs e)
+        {
+            OperarCuenta();
+        }
+
+        private void OperarCuenta()
+        {
+            btnOperarCuenta.Enabled = false;
+            listaCuentasCliente.Enabled = false;
+            grupoMovimientos.Visible = true;
+            grupoPlazoFijo.Visible = true;
+            grupoMovimientos.Enabled = true;
+            grupoPlazoFijo.Enabled = true;
+            btnExtraer.Enabled = true;
+            btnDepositar.Enabled = true;
+            btnSimularPF.Enabled = true;
+            btnAltaPF.Enabled = true;
+            label10.Visible = false;
+            tbMontoOperacion.Visible = false;
+            btnConfirmarOperacion.Visible = false;
+            cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
+        }
+
+        private void MostrarOperacionesCuenta(bool toggle)
+        {
+
+        }
+
+
         // TABLA //
         private DataTable TablaDesdeArchivoTXT(string ubicacion, char separador = '|')
         {
@@ -179,7 +244,7 @@ namespace TP_Integrador_app
 
             for (int c = 1; c < arregloLinea.Length; c++)
             {
-                if (tbCuit.Text==arregloLinea[c])
+                if (tbCuitBuscado.Text == arregloLinea[c])
                 {
                     AddColumnToTable(arregloLinea, separador, ref dt);
                     AddRowToTable(arregloLinea, separador, ref dt);
@@ -187,7 +252,7 @@ namespace TP_Integrador_app
             }
             return dt;
         }
-        
+
         private void AddRowToTable(string[] value, char separador, ref DataTable dt)
         {
             for (int i = 1; i < value.Length; i++)
@@ -201,7 +266,7 @@ namespace TP_Integrador_app
                 dt.Rows.Add(dr);
             }
         }
-        
+
         private void AddColumnToTable(string[] columna, char separador, ref DataTable dt)
         {
             string[] columnas = columna[0].Split(separador);
@@ -212,9 +277,78 @@ namespace TP_Integrador_app
             }
         }
 
-        private void c_TextChanged(object sender, EventArgs e)
+        private void btnExtraer_Click(object sender, EventArgs e)
         {
+            btnExtraer.Enabled = false;
+            btnDepositar.Enabled = false;
+            grupoPlazoFijo.Enabled = false;
+            label10.Text = "Monto a extraer";
+            label10.Visible = true;
+            tbMontoOperacion.Visible = true;
+            btnConfirmarOperacion.Visible=true;
+            btnConfirmarOperacion.Enabled=true;
+            operacion = 1;
+        }
 
+        private void btnDepositar_Click(object sender, EventArgs e)
+        {
+            btnExtraer.Enabled = false;
+            btnDepositar.Enabled = false;
+            grupoPlazoFijo.Enabled = false;
+            label10.Text = "Monto a depositar";
+            label10.Visible = true;
+            tbMontoOperacion.Visible = true;
+            btnConfirmarOperacion.Visible = true;
+            btnConfirmarOperacion.Enabled = true;
+            operacion = 2;
+        }
+
+        private void btnConfirmarOperacion_Click(object sender, EventArgs e)
+        {
+            int extraccion = 1;
+            int deposito = 2;
+            bool resultadoOperacion = false;
+            decimal monto = decimal.Parse(tbMontoOperacion.Text);
+            if (operacion == extraccion && monto <= cuenta.GetDisponible() && monto > 0)
+            {
+                cuenta.Saldo -= monto;
+                resultadoOperacion=true;
+            }
+            else if (operacion == deposito && monto > 0)
+            {
+                cuenta.Saldo += monto;
+                resultadoOperacion = true;
+            }
+            if (!resultadoOperacion)
+            {
+                MessageBox.Show("Error en la operación");
+            }
+            else
+            {
+                tbMontoOperacion.Text = string.Empty;
+                montoDisponible.Text = cuenta.GetDisponible().ToString();
+                montoCuenta.Text = cuenta.Saldo.ToString();
+                MessageBox.Show("Operación exitosa. :)");
+                OperarCuenta();
+            }
+        }
+
+        private void btnSimularPF_Click(object sender, EventArgs e)
+        {
+            int simulacionPF = 3;
+            if (operacion == simulacionPF)
+            {
+
+            }
+        }
+
+        private void btnAltaPF_Click(object sender, EventArgs e)
+        {
+            int altaPF = 4;
+            if (operacion == altaPF)
+            {
+
+            }
         }
 
         //public static string file = @"C:\C#\Clientes.txt";

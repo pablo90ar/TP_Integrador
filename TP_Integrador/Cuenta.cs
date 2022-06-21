@@ -11,9 +11,22 @@ namespace TP_Integrador_app
     {
         private string nro;
         private decimal saldo;
+        private PlazoFijo plazofijo;
         public string Nro { get => nro; }
         public decimal Saldo { get => saldo; set => saldo = value; }
-        PlazoFijo plazofijo;
+
+        public decimal GetDisponible()
+        {
+            if (plazofijo != null)
+            {
+                return Saldo - plazofijo.Monto;
+            } 
+            else
+            {
+                return Saldo;
+            }
+        }
+        public PlazoFijo PlazoFijo { get => plazofijo; }
 
         public Cuenta(string nroCuenta, decimal saldoCuenta)
         {

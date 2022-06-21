@@ -1,6 +1,8 @@
 persona 
-cuit|nombre|apellido|r1|r2|r3|sueldoNeto|[cuentas]
+cuit|nombre|apellido|sueldoNeto|[cuentas]
 empresa
-cuit|razonSocial|condicionIva|nroIIBB|actaSocios(nombre PDF)|ultimoBalance|[cuentas]
+cuit|razonSocial|condicionIva|nroIIBB|[cuentas]
 cuenta
-nroCuenta|tipoCuenta|saldo|montoPF|inicioPF|duracionPF|montoDescubierto
+nroCuenta|tipoCuenta|saldo|montoDescubierto
+plazofijo
+nroCuenta|monto|inicio|duracion
