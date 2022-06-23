@@ -53,24 +53,22 @@
             this.montoCuenta = new System.Windows.Forms.TextBox();
             this.btnExtraer = new System.Windows.Forms.Button();
             this.btnDepositar = new System.Windows.Forms.Button();
-            this.btnSimularPF = new System.Windows.Forms.Button();
+            this.btnSimulacionPF = new System.Windows.Forms.Button();
             this.montoDisponible = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnAltaPF = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.tbMontoOperacion = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.btnConfirmarOperacion = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbMontoPF = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.btnSimularPF = new System.Windows.Forms.Button();
+            this.btnCrearPF = new System.Windows.Forms.Button();
             this.grupoCuenta = new System.Windows.Forms.GroupBox();
             this.grupoMovimientos = new System.Windows.Forms.GroupBox();
             this.grupoPlazoFijo = new System.Windows.Forms.GroupBox();
+            this.tbDuracionPf = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grupoCuenta.SuspendLayout();
             this.grupoMovimientos.SuspendLayout();
@@ -138,7 +136,7 @@
             // btnSalir
             // 
             this.btnSalir.Enabled = false;
-            this.btnSalir.Location = new System.Drawing.Point(12, 658);
+            this.btnSalir.Location = new System.Drawing.Point(12, 643);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(115, 23);
             this.btnSalir.TabIndex = 7;
@@ -219,9 +217,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1043, 9);
+            this.dataGridView1.Location = new System.Drawing.Point(159, 439);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(276, 395);
+            this.dataGridView1.Size = new System.Drawing.Size(763, 227);
             this.dataGridView1.TabIndex = 17;
             // 
             // btnVolverAlBanco
@@ -280,7 +278,7 @@
             // 
             this.btnOperarCuenta.Location = new System.Drawing.Point(597, 29);
             this.btnOperarCuenta.Name = "btnOperarCuenta";
-            this.btnOperarCuenta.Size = new System.Drawing.Size(146, 117);
+            this.btnOperarCuenta.Size = new System.Drawing.Size(146, 68);
             this.btnOperarCuenta.TabIndex = 24;
             this.btnOperarCuenta.Text = "Operar Cuenta";
             this.btnOperarCuenta.UseVisualStyleBackColor = true;
@@ -328,16 +326,16 @@
             this.btnDepositar.UseVisualStyleBackColor = true;
             this.btnDepositar.Click += new System.EventHandler(this.btnDepositar_Click);
             // 
-            // btnSimularPF
+            // btnSimulacionPF
             // 
-            this.btnSimularPF.Enabled = false;
-            this.btnSimularPF.Location = new System.Drawing.Point(22, 26);
-            this.btnSimularPF.Name = "btnSimularPF";
-            this.btnSimularPF.Size = new System.Drawing.Size(252, 36);
-            this.btnSimularPF.TabIndex = 29;
-            this.btnSimularPF.Text = "Simular Plazo Fijo";
-            this.btnSimularPF.UseVisualStyleBackColor = true;
-            this.btnSimularPF.Click += new System.EventHandler(this.btnSimularPF_Click);
+            this.btnSimulacionPF.Enabled = false;
+            this.btnSimulacionPF.Location = new System.Drawing.Point(22, 26);
+            this.btnSimulacionPF.Name = "btnSimulacionPF";
+            this.btnSimulacionPF.Size = new System.Drawing.Size(252, 36);
+            this.btnSimulacionPF.TabIndex = 29;
+            this.btnSimulacionPF.Text = "Simular Plazo Fijo";
+            this.btnSimulacionPF.UseVisualStyleBackColor = true;
+            this.btnSimulacionPF.Click += new System.EventHandler(this.btnSimularPF_Click);
             // 
             // montoDisponible
             // 
@@ -367,25 +365,6 @@
             this.btnAltaPF.Text = "Realizar Plazo Fijo";
             this.btnAltaPF.UseVisualStyleBackColor = true;
             this.btnAltaPF.Click += new System.EventHandler(this.btnAltaPF_Click);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(457, 126);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(95, 20);
-            this.textBox2.TabIndex = 34;
-            this.textBox2.Visible = false;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 129);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(124, 13);
-            this.label9.TabIndex = 33;
-            this.label9.Text = "Días restantes Plazo Fijo";
-            this.label9.Visible = false;
             // 
             // tbMontoOperacion
             // 
@@ -417,13 +396,13 @@
             this.btnConfirmarOperacion.Visible = false;
             this.btnConfirmarOperacion.Click += new System.EventHandler(this.btnConfirmarOperacion_Click);
             // 
-            // textBox4
+            // tbMontoPF
             // 
-            this.textBox4.Location = new System.Drawing.Point(457, 33);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(95, 20);
-            this.textBox4.TabIndex = 39;
-            this.textBox4.Visible = false;
+            this.tbMontoPF.Location = new System.Drawing.Point(457, 33);
+            this.tbMontoPF.Name = "tbMontoPF";
+            this.tbMontoPF.Size = new System.Drawing.Size(95, 20);
+            this.tbMontoPF.TabIndex = 39;
+            this.tbMontoPF.Visible = false;
             // 
             // label11
             // 
@@ -435,47 +414,30 @@
             this.label11.Text = "Monto a invertir en Plazo Fijo";
             this.label11.Visible = false;
             // 
-            // button2
+            // btnSimularPF
             // 
-            this.button2.Location = new System.Drawing.Point(597, 26);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(146, 36);
-            this.button2.TabIndex = 40;
-            this.button2.Text = "Iniciar Simulación";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
+            this.btnSimularPF.Location = new System.Drawing.Point(597, 26);
+            this.btnSimularPF.Name = "btnSimularPF";
+            this.btnSimularPF.Size = new System.Drawing.Size(146, 36);
+            this.btnSimularPF.TabIndex = 40;
+            this.btnSimularPF.Text = "Iniciar Simulación";
+            this.btnSimularPF.UseVisualStyleBackColor = true;
+            this.btnSimularPF.Visible = false;
+            this.btnSimularPF.Click += new System.EventHandler(this.btnSimularPF_Click_1);
             // 
-            // button3
+            // btnCrearPF
             // 
-            this.button3.Location = new System.Drawing.Point(597, 68);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(146, 36);
-            this.button3.TabIndex = 41;
-            this.button3.Text = "Iniciar Plazo Fijo";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(457, 77);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(95, 20);
-            this.textBox5.TabIndex = 43;
-            this.textBox5.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(314, 80);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(137, 13);
-            this.label12.TabIndex = 42;
-            this.label12.Text = "Duración Plazo Fijo (meses)";
-            this.label12.Visible = false;
+            this.btnCrearPF.Location = new System.Drawing.Point(597, 68);
+            this.btnCrearPF.Name = "btnCrearPF";
+            this.btnCrearPF.Size = new System.Drawing.Size(146, 36);
+            this.btnCrearPF.TabIndex = 41;
+            this.btnCrearPF.Text = "Iniciar Plazo Fijo";
+            this.btnCrearPF.UseVisualStyleBackColor = true;
+            this.btnCrearPF.Visible = false;
+            this.btnCrearPF.Click += new System.EventHandler(this.btnCrearPF_Click);
             // 
             // grupoCuenta
             // 
-            this.grupoCuenta.Controls.Add(this.label9);
             this.grupoCuenta.Controls.Add(this.btnOperarCuenta);
             this.grupoCuenta.Controls.Add(this.label5);
             this.grupoCuenta.Controls.Add(this.label6);
@@ -485,10 +447,9 @@
             this.grupoCuenta.Controls.Add(this.montoCuenta);
             this.grupoCuenta.Controls.Add(this.label8);
             this.grupoCuenta.Controls.Add(this.montoDisponible);
-            this.grupoCuenta.Controls.Add(this.textBox2);
             this.grupoCuenta.Location = new System.Drawing.Point(159, 25);
             this.grupoCuenta.Name = "grupoCuenta";
-            this.grupoCuenta.Size = new System.Drawing.Size(763, 174);
+            this.grupoCuenta.Size = new System.Drawing.Size(763, 124);
             this.grupoCuenta.TabIndex = 45;
             this.grupoCuenta.TabStop = false;
             this.grupoCuenta.Text = "Cuenta";
@@ -501,7 +462,7 @@
             this.grupoMovimientos.Controls.Add(this.label10);
             this.grupoMovimientos.Controls.Add(this.tbMontoOperacion);
             this.grupoMovimientos.Controls.Add(this.btnConfirmarOperacion);
-            this.grupoMovimientos.Location = new System.Drawing.Point(159, 216);
+            this.grupoMovimientos.Location = new System.Drawing.Point(159, 164);
             this.grupoMovimientos.Name = "grupoMovimientos";
             this.grupoMovimientos.Size = new System.Drawing.Size(763, 93);
             this.grupoMovimientos.TabIndex = 46;
@@ -511,15 +472,15 @@
             // 
             // grupoPlazoFijo
             // 
-            this.grupoPlazoFijo.Controls.Add(this.btnSimularPF);
+            this.grupoPlazoFijo.Controls.Add(this.btnSimulacionPF);
             this.grupoPlazoFijo.Controls.Add(this.btnAltaPF);
             this.grupoPlazoFijo.Controls.Add(this.label11);
-            this.grupoPlazoFijo.Controls.Add(this.textBox5);
-            this.grupoPlazoFijo.Controls.Add(this.textBox4);
+            this.grupoPlazoFijo.Controls.Add(this.tbDuracionPf);
+            this.grupoPlazoFijo.Controls.Add(this.tbMontoPF);
             this.grupoPlazoFijo.Controls.Add(this.label12);
-            this.grupoPlazoFijo.Controls.Add(this.button2);
-            this.grupoPlazoFijo.Controls.Add(this.button3);
-            this.grupoPlazoFijo.Location = new System.Drawing.Point(159, 330);
+            this.grupoPlazoFijo.Controls.Add(this.btnSimularPF);
+            this.grupoPlazoFijo.Controls.Add(this.btnCrearPF);
+            this.grupoPlazoFijo.Location = new System.Drawing.Point(159, 278);
             this.grupoPlazoFijo.Name = "grupoPlazoFijo";
             this.grupoPlazoFijo.Size = new System.Drawing.Size(763, 132);
             this.grupoPlazoFijo.TabIndex = 47;
@@ -527,11 +488,29 @@
             this.grupoPlazoFijo.Text = "Plazo Fijo";
             this.grupoPlazoFijo.Visible = false;
             // 
+            // tbDuracionPf
+            // 
+            this.tbDuracionPf.Location = new System.Drawing.Point(457, 77);
+            this.tbDuracionPf.Name = "tbDuracionPf";
+            this.tbDuracionPf.Size = new System.Drawing.Size(95, 20);
+            this.tbDuracionPf.TabIndex = 43;
+            this.tbDuracionPf.Visible = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(314, 80);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(137, 13);
+            this.label12.TabIndex = 42;
+            this.label12.Text = "Duración Plazo Fijo (meses)";
+            this.label12.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1331, 693);
+            this.ClientSize = new System.Drawing.Size(947, 688);
             this.Controls.Add(this.grupoPlazoFijo);
             this.Controls.Add(this.grupoMovimientos);
             this.Controls.Add(this.grupoCuenta);
@@ -593,24 +572,22 @@
         private System.Windows.Forms.TextBox montoCuenta;
         private System.Windows.Forms.Button btnExtraer;
         private System.Windows.Forms.Button btnDepositar;
-        private System.Windows.Forms.Button btnSimularPF;
+        private System.Windows.Forms.Button btnSimulacionPF;
         private System.Windows.Forms.TextBox montoDisponible;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnAltaPF;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbMontoOperacion;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnConfirmarOperacion;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbMontoPF;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnSimularPF;
+        private System.Windows.Forms.Button btnCrearPF;
         private System.Windows.Forms.GroupBox grupoCuenta;
         private System.Windows.Forms.GroupBox grupoMovimientos;
         private System.Windows.Forms.GroupBox grupoPlazoFijo;
+        private System.Windows.Forms.TextBox tbDuracionPf;
+        private System.Windows.Forms.Label label12;
     }
 }
 

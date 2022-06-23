@@ -213,17 +213,18 @@ namespace TP_Integrador_app
             grupoPlazoFijo.Enabled = true;
             btnExtraer.Enabled = true;
             btnDepositar.Enabled = true;
-            btnSimularPF.Enabled = true;
+            btnSimulacionPF.Enabled = true;
             btnAltaPF.Enabled = true;
             label10.Visible = false;
             tbMontoOperacion.Visible = false;
             btnConfirmarOperacion.Visible = false;
+            label11.Visible = false;
+            label12.Visible = false;
+            tbMontoPF.Visible = false;
+            tbDuracionPf.Visible = false;
+            btnSimularPF.Visible = false;
+            btnCrearPF.Visible = false;
             cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
-        }
-
-        private void MostrarOperacionesCuenta(bool toggle)
-        {
-
         }
 
 
@@ -335,20 +336,65 @@ namespace TP_Integrador_app
 
         private void btnSimularPF_Click(object sender, EventArgs e)
         {
+            operacion = 3;
             int simulacionPF = 3;
             if (operacion == simulacionPF)
             {
+                grupoMovimientos.Enabled = false;
+                btnSimulacionPF.Enabled = false;
+                btnAltaPF.Enabled = false;
+                tbMontoPF.Visible = true;
+                tbDuracionPf.Visible = true;
+                tbMontoPF.Text = string.Empty;
+                tbDuracionPf.Text = string.Empty;
+                label11.Visible = true;
+                label12.Visible = true;
+                btnSimularPF.Visible = true;
 
             }
         }
 
         private void btnAltaPF_Click(object sender, EventArgs e)
         {
+            operacion = 4;
             int altaPF = 4;
             if (operacion == altaPF)
             {
+                grupoMovimientos.Enabled = false;
+                btnSimulacionPF.Enabled = false;
+                btnAltaPF.Enabled = false;
+                tbMontoPF.Visible = true;
+                tbDuracionPf.Visible = true;
+                tbMontoPF.Text = string.Empty;
+                tbDuracionPf.Text = string.Empty;
+                label11.Visible = true;
+                label12.Visible = true;
+                btnCrearPF.Visible = true;
 
             }
+        }
+
+        private void btnSimularPF_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Contenido de la simulacion", "Simulación de plazo fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            tbDuracionPf.Text = String.Empty;
+            tbMontoPF.Text = String.Empty;
+            OperarCuenta();
+        }
+
+        private void btnCrearPF_Click(object sender, EventArgs e)
+        {
+            bool validado = false;
+            // check PF
+            if (validado)
+            {
+                MessageBox.Show("Plazo fijo creado de manera Exitosa", "Creación de Plazo Fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Error al crear el plazo fijo", "Creación de Plazo Fijo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            OperarCuenta();
         }
 
         //public static string file = @"C:\C#\Clientes.txt";

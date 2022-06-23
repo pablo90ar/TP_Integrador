@@ -11,28 +11,30 @@ namespace TP_Integrador_app
     {
         private string nro;
         private decimal saldo;
-        private PlazoFijo plazofijo;
+        private List<PlazoFijo> plazosfijos;
         public string Nro { get => nro; }
         public decimal Saldo { get => saldo; set => saldo = value; }
 
         public decimal GetDisponible()
         {
-            if (plazofijo != null)
+            decimal disponible = Saldo;
+            if (plazosfijos != null)
             {
-                return Saldo - plazofijo.Monto;
-            } 
-            else
-            {
-                return Saldo;
+                foreach (var plazoFijo in plazosfijos)
+                {
+                    disponible -= plazoFijo.Monto;
+                }
             }
+            return disponible;
+            
         }
-        public PlazoFijo PlazoFijo { get => plazofijo; }
+        public List<PlazoFijo> PlazoFijo { get => plazosfijos; }
 
         public Cuenta(string nroCuenta, decimal saldoCuenta)
         {
             nro = nroCuenta;
             saldo = saldoCuenta;
-            plazofijo = null;
+            plazosfijos = null;
         }
     }
 }
