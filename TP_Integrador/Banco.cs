@@ -14,6 +14,8 @@ namespace TP_Integrador_app
         private string nombreBanco;
         private string nombreSucursal;
 
+        public string NombreSucursal { get => nombreSucursal; }
+
         public Banco(string nombreBanco, string nombreSucursal)
         {
             this.nombreBanco = nombreBanco;
