@@ -1,0 +1,2 @@
+nroCuenta|monto|inicio|duracion
+20220620[YYYYMMMDD]

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace TP_Integrador_app
 {
@@ -11,6 +12,8 @@ namespace TP_Integrador_app
     {
         private List<Cliente> clientes = new List<Cliente>();
         private List<Cuenta> cuentas = new List<Cuenta>();
+        private List<PlazoFijo> plazosFijos = new List<PlazoFijo>();
+
         private string nombreBanco;
         private string nombreSucursal;
 
@@ -23,6 +26,21 @@ namespace TP_Integrador_app
 
             string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
             string directorioSucursales = Path.Combine(dirProyecto, @"..\..\..\bancos\" + this.nombreBanco + @"\");
+            
+            using (StreamReader sr_plazosFijos = new StreamReader(directorioSucursales + nombreSucursal + "-plazosfijos.txt"))
+            {
+                string datos_plazofijo = "";
+                while ((datos_plazofijo = sr_plazosFijos.ReadLine()) != null)
+                {
+                    string[] campos = datos_plazofijo.Split('|');
+                    string nroCuenta = campos[0].Split('-')[0];
+                    decimal monto = decimal.Parse(campos[1]);
+                    int duracion = int.Parse(campos[2]);
+                    DateTime fechaInicio = DateTime.ParseExact(campos[3], "yyyyMMdd", CultureInfo.InvariantCulture);
+                    PlazoFijo nuevoPlazoFijo = new PlazoFijo(nroCuenta, monto, duracion, fechaInicio);
+                    plazosFijos.Add(nuevoPlazoFijo);
+                }
+            }
 
             using (StreamReader sr_cuentas = new StreamReader(directorioSucursales + nombreSucursal + "-cuentas.txt"))
             {
@@ -30,18 +48,25 @@ namespace TP_Integrador_app
                 while((datos_cuenta = sr_cuentas.ReadLine()) != null)
                 {
                     string[] campos = datos_cuenta.Split('|');
-                    string nroCuenta = campos[0];
-                    string tipo = campos[1];
-                    decimal saldo = decimal.Parse(campos[2]);
+                    string nroCuenta = campos[0].Split('-')[0];
+                    string tipo = campos[0].Split('-')[1];
+                    decimal saldo = decimal.Parse(campos[1]);
                     Cuenta nuevaCuenta;
-                    if (tipo == "O1")
+                    if (tipo == "01")
                     {
-                        decimal descubierto = decimal.Parse(campos[3]);
+                        decimal descubierto = decimal.Parse(campos[2]);
                         nuevaCuenta = new CuentaCorriente(nroCuenta, saldo, descubierto);
                     }
                     else
                     {
                         nuevaCuenta = new CajaAhorro(nroCuenta, saldo);
+                    }
+                    foreach(PlazoFijo plazoFijo in plazosFijos)
+                    {
+                        if (plazoFijo.Cuenta == nuevaCuenta.Nro)
+                        {
+                            nuevaCuenta.AgrerarPlazoFijo(plazoFijo);
+                        }
                     }
                     cuentas.Add(nuevaCuenta);
                 }
@@ -105,6 +130,7 @@ namespace TP_Integrador_app
                     clientes.Add(nuevoCliente);
                 }
             }
+
         }
 
         public bool AgregarCliente()
@@ -122,6 +148,19 @@ namespace TP_Integrador_app
                 }
             }
             return null;
+        }
+
+        public List<PlazoFijo> BuscarPlazosFijosDeCuenta(string nroCuenta)
+        {
+            List<PlazoFijo> plazosFijosCuenta = new List<PlazoFijo>();
+            foreach(PlazoFijo plazoFijo in plazosFijos)
+            {
+                if (plazoFijo.Cuenta == nroCuenta)
+                {
+                    plazosFijosCuenta.Add(plazoFijo);
+                }
+            }
+            return plazosFijosCuenta;
         }
 
         public decimal SaldoTesoreria()
