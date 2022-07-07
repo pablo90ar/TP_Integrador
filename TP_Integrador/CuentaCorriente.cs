@@ -8,6 +8,7 @@ namespace TP_Integrador_app
 {
     internal class CuentaCorriente : Cuenta, ICuenta
     {
+        public decimal MontoDescubierto{ get => montoDescubierto; set => montoDescubierto = value; }
         private decimal montoDescubierto;
 
         public CuentaCorriente(string nroCuenta, decimal saldo, decimal montoDescubierto) : base(nroCuenta, saldo)

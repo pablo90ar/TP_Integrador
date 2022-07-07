@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TP_Integrador;
+using TP_Integrador_app;
 
 namespace TP_Integrador_app
 {
@@ -18,11 +18,14 @@ namespace TP_Integrador_app
         Cliente cliente;
         Cuenta cuenta;
         int operacion;
+        bool montoValido;
+        bool duracionValida;
         public Form1()
         {
             InitializeComponent();
         }
 
+        // Formulario principal //
         private void Form1_Load(object sender, EventArgs e)
         {
             string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
@@ -35,6 +38,8 @@ namespace TP_Integrador_app
             listaBancos.SelectedIndex = 0;
         }
 
+
+        // Eventos Click
         private void BtnCargarBanco_Click(object sender, EventArgs e)
         {
             listaSucursales.Enabled = true;
@@ -95,14 +100,6 @@ namespace TP_Integrador_app
 
         }
 
-        public void ActivarMenu(bool toogle)
-        {
-            btnSalir.Enabled = toogle;
-            btnMenuSaldo.Enabled = toogle;
-            btnMenuOperar.Enabled = toogle;
-            btnMenuCrear.Enabled = toogle;
-        }
-
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             btnOperarCliente.Visible = false;
@@ -126,7 +123,7 @@ namespace TP_Integrador_app
             cliente = banco.BuscarCliente(cuitBuscado);
             if (cliente != null)
             {
-                MostrarDatosCliente(true);
+                
                 if (cliente.GetType() == typeof(Persona))
                 {
                     Persona clientePersona = (Persona)cliente;
@@ -151,6 +148,9 @@ namespace TP_Integrador_app
                 btnOperarCliente.Enabled = false;
                 tbCuitBuscado.Enabled = false;
                 grupoCuenta.Visible = true;
+                cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
+                MostrarDatosCliente(true);
+                MostrarDescubiertoSiExiste();
             }
             else
             {
@@ -158,6 +158,192 @@ namespace TP_Integrador_app
             }
             //TablaDesdeArchivoTXT(file);
             //dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
+        }
+
+        private void BtnOperarCuenta_Click(object sender, EventArgs e)
+        {
+            OperarCuenta();
+        }
+
+        private void BtnExtraer_Click(object sender, EventArgs e)
+        {
+            btnExtraer.Enabled = false;
+            btnDepositar.Enabled = false;
+            grupoPlazoFijo.Enabled = false;
+            label10.Text = "Monto a extraer";
+            label10.Visible = true;
+            tbMontoOperacion.Visible = true;
+            btnConfirmarOperacion.Visible = true;
+            operacion = 1;
+        }
+
+        private void BtnDepositar_Click(object sender, EventArgs e)
+        {
+            btnExtraer.Enabled = false;
+            btnDepositar.Enabled = false;
+            grupoPlazoFijo.Enabled = false;
+            label10.Text = "Monto a depositar";
+            label10.Visible = true;
+            tbMontoOperacion.Visible = true;
+            btnConfirmarOperacion.Visible = true;
+            operacion = 2;
+        }
+
+        private void BtnConfirmarOperacion_Click(object sender, EventArgs e)
+        {
+            int extraccion = 1;
+            int deposito = 2;
+            bool resultadoOperacion = false;
+            decimal monto = decimal.Parse(tbMontoOperacion.Text);
+            if (operacion == extraccion)
+            {
+                cuenta.Saldo -= monto;
+                resultadoOperacion = true;
+            }
+            else if (operacion == deposito)
+            {
+                cuenta.Saldo += monto;
+                resultadoOperacion = true;
+            }
+            if (!resultadoOperacion)
+            {
+                MessageBox.Show("Error en la operación");
+            }
+            else
+            {
+                tbMontoOperacion.Text = string.Empty;
+                montoDisponible.Text = cuenta.ObtenerDisponible().ToString();
+                montoCuenta.Text = cuenta.Saldo.ToString();
+                MessageBox.Show("Operación exitosa. :)");
+                OperarCuenta();
+            }
+        }
+
+        private void BtnSimulacionPF_Click(object sender, EventArgs e)
+        {
+            operacion = 3;
+            int simulacionPF = 3;
+            if (operacion == simulacionPF)
+            {
+                grupoMovimientos.Enabled = false;
+                btnSimulacionPF.Enabled = false;
+                btnAltaPF.Enabled = false;
+                tbMontoPF.Visible = true;
+                tbDuracionPf.Visible = true;
+                tbMontoPF.Text = string.Empty;
+                tbDuracionPf.Text = string.Empty;
+                label11.Visible = true;
+                label12.Visible = true;
+                btnSimularPF.Visible = true;
+
+            }
+        }
+
+        private void BtnAltaPF_Click(object sender, EventArgs e)
+        {
+            operacion = 4;
+            int altaPF = 4;
+            if (operacion == altaPF)
+            {
+                grupoMovimientos.Enabled = false;
+                btnSimulacionPF.Enabled = false;
+                btnAltaPF.Enabled = false;
+                tbMontoPF.Visible = true;
+                tbDuracionPf.Visible = true;
+                tbMontoPF.Text = string.Empty;
+                tbDuracionPf.Text = string.Empty;
+                label11.Visible = true;
+                label12.Visible = true;
+                btnCrearPF.Visible = true;
+
+            }
+        }
+
+        private void BtnSimularPF_Click(object sender, EventArgs e)
+        {
+            decimal duracion = int.Parse(tbDuracionPf.Text);
+            decimal monto = decimal.Parse(tbMontoPF.Text);
+            decimal ganancia = (monto * 0.30M / 365 * duracion);
+            ganancia = decimal.Round(ganancia, 2);
+            MessageBox.Show("Constituyendo un Plazo Fijo por un monto de $" + monto + ", al término de " + duracion + " días, tendrá una ganacia de $" + ganancia + ".-", "Simulación de plazo fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            tbDuracionPf.Text = String.Empty;
+            tbMontoPF.Text = String.Empty;
+            OperarCuenta();
+        }
+
+        private void BtnCrearPF_Click(object sender, EventArgs e)
+        {
+            int duracion = int.Parse(tbDuracionPf.Text);
+            decimal monto = decimal.Parse(tbMontoPF.Text);
+            PlazoFijo plazoFijo = new PlazoFijo(cuenta.Nro, monto, duracion);
+            cuenta.AgrerarPlazoFijo(plazoFijo);
+            montoDisponible.Text = cuenta.ObtenerDisponible().ToString();
+            MessageBox.Show("Plazo fijo creado de manera Exitosa", "Creación de Plazo Fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            tbDuracionPf.Text = String.Empty;
+            tbMontoPF.Text = String.Empty;
+            OperarCuenta();
+        }
+
+
+        // Eventos Select
+        private void ListaCuentasCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = listaCuentasCliente.SelectedIndex;
+            montoCuenta.Text = LeerMontoCuenta(index).ToString();
+            cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
+            List<PlazoFijo> plazosFijosCuenta = banco.BuscarPlazosFijosDeCuenta(cuenta.Nro);
+            montoDisponible.Text = (decimal.Parse(montoCuenta.Text) - LeerMontoPlazoFijo(index)).ToString();
+            MostrarDescubiertoSiExiste();
+        }
+
+
+        // Operaciones auxiliares
+        private void OperarCuenta()
+        { 
+            btnOperarCuenta.Enabled = false;
+            listaCuentasCliente.Enabled = false;
+            grupoMovimientos.Visible = true;
+            grupoPlazoFijo.Visible = true;
+            grupoMovimientos.Enabled = true;
+            grupoPlazoFijo.Enabled = true;
+            btnDepositar.Enabled = true;
+            label10.Visible = false;
+            tbMontoOperacion.Visible = false;
+            btnConfirmarOperacion.Visible = false;
+            label11.Visible = false;
+            label12.Visible = false;
+            tbMontoPF.Visible = false;
+            tbDuracionPf.Visible = false;
+            btnSimularPF.Visible = false;
+            btnCrearPF.Visible = false;
+            btnExtraer.Enabled = true;
+            if (cuenta.GetType() == typeof(CuentaCorriente))
+            {
+                CuentaCorriente cc = (CuentaCorriente)cuenta;
+                if (cc.MontoDescubierto + cc.ObtenerDisponible() == 0)
+                {
+                    btnExtraer.Enabled = false;
+                }
+            }
+
+            if (cuenta.ObtenerDisponible() > 0)
+            {
+                btnSimulacionPF.Enabled = true;
+                btnAltaPF.Enabled = true;
+            }
+            else
+            {
+                btnSimulacionPF.Enabled = false;
+                btnAltaPF.Enabled = false;
+            }
+        }
+
+        public void ActivarMenu(bool toogle)
+        {
+            btnSalir.Enabled = toogle;
+            btnMenuSaldo.Enabled = toogle;
+            btnMenuOperar.Enabled = toogle;
+            btnMenuCrear.Enabled = toogle;
         }
 
         private void MostrarDatosCliente(bool toggle)
@@ -171,8 +357,22 @@ namespace TP_Integrador_app
             label8.Visible = toggle;
             btnOperarCuenta.Visible = toggle;
             montoCuenta.Visible = toggle;
-            grupoCuenta.Visible=toggle;
+            grupoCuenta.Visible = toggle;
             montoDisponible.Visible = toggle;
+
+        }
+
+        private void MostrarDescubiertoSiExiste()
+        {
+            labelDesc.Visible = false;
+            montoDescubierto.Visible = false;
+            CuentaCorriente cc = es_cc(cuenta);
+            if (cc != null)
+            {
+                labelDesc.Visible = true;
+                montoDescubierto.Visible = true;
+                montoDescubierto.Text = cc.MontoDescubierto.ToString();
+            }
         }
 
         private decimal LeerMontoCuenta(int index)
@@ -182,49 +382,78 @@ namespace TP_Integrador_app
 
         private decimal LeerMontoPlazoFijo(int index)
         {
-            PlazoFijo plazoFijo = cliente.Cuentas[index].PlazoFijo;
+            return cliente.Cuentas[index].Saldo - cliente.Cuentas[index].ObtenerDisponible();
 
-            if (plazoFijo != null)
+        }
+
+        private void tbMontoPF_TextChanged(object sender, EventArgs e)
+        {
+            decimal monto;
+            try
             {
-                return plazoFijo.Monto;
+                monto = decimal.Parse(tbMontoPF.Text);
             }
-            return 0;
+            catch
+            {
+                monto = 0;
+            }
+            
+            if (monto > 0 && monto <= cuenta.ObtenerDisponible())
+            {
+                montoValido = true;
+            }
+            else
+            {
+                montoValido = false;
+            }
+            validacionPlazoFijo();            
+        }
+        
+        private void tbDuracionPf_TextChanged(object sender, EventArgs e)
+        {
+            int duracion;
+            try
+            {
+                duracion = int.Parse(tbDuracionPf.Text);
+            }
+            catch
+            {
+                duracion = 0;
+            }
+            if (duracion > 0 && duracion <= 240)
+            {
+                duracionValida = true;
+            }
+            else
+            {
+                duracionValida = false;
+            }
+            validacionPlazoFijo();
         }
 
-        private void ListaCuentasCliente_SelectedIndexChanged(object sender, EventArgs e)
+        private void validacionPlazoFijo()
         {
-            int index = listaCuentasCliente.SelectedIndex;
-            montoCuenta.Text = LeerMontoCuenta(index).ToString();
-            montoDisponible.Text = (decimal.Parse(montoCuenta.Text) - LeerMontoPlazoFijo(index)).ToString();
+            if (montoValido && duracionValida)
+            {
+                btnCrearPF.Enabled = true;
+                btnSimularPF.Enabled = true;
+            }
+            else
+            {
+                btnCrearPF.Enabled = false;
+                btnSimularPF.Enabled = false;
+
+            }
         }
 
-        private void BtnOperarCuenta_Click(object sender, EventArgs e)
+        private CuentaCorriente es_cc(Cuenta cuenta)
         {
-            OperarCuenta();
-        }
-
-        private void OperarCuenta()
-        {
-            btnOperarCuenta.Enabled = false;
-            listaCuentasCliente.Enabled = false;
-            grupoMovimientos.Visible = true;
-            grupoPlazoFijo.Visible = true;
-            grupoMovimientos.Enabled = true;
-            grupoPlazoFijo.Enabled = true;
-            btnExtraer.Enabled = true;
-            btnDepositar.Enabled = true;
-            btnSimulacionPF.Enabled = true;
-            btnAltaPF.Enabled = true;
-            label10.Visible = false;
-            tbMontoOperacion.Visible = false;
-            btnConfirmarOperacion.Visible = false;
-            label11.Visible = false;
-            label12.Visible = false;
-            tbMontoPF.Visible = false;
-            tbDuracionPf.Visible = false;
-            btnSimularPF.Visible = false;
-            btnCrearPF.Visible = false;
-            cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
+            if (cuenta.GetType() == typeof(CuentaCorriente))
+            {
+                CuentaCorriente cc = (CuentaCorriente)cuenta;
+                return cc;
+            }
+            return null;
         }
 
 
@@ -278,125 +507,84 @@ namespace TP_Integrador_app
             }
         }
 
-        private void btnExtraer_Click(object sender, EventArgs e)
+        private void tbCuitBuscado_TextChanged(object sender, EventArgs e)
         {
-            btnExtraer.Enabled = false;
-            btnDepositar.Enabled = false;
-            grupoPlazoFijo.Enabled = false;
-            label10.Text = "Monto a extraer";
-            label10.Visible = true;
-            tbMontoOperacion.Visible = true;
-            btnConfirmarOperacion.Visible=true;
-            btnConfirmarOperacion.Enabled=true;
-            operacion = 1;
-        }
-
-        private void btnDepositar_Click(object sender, EventArgs e)
-        {
-            btnExtraer.Enabled = false;
-            btnDepositar.Enabled = false;
-            grupoPlazoFijo.Enabled = false;
-            label10.Text = "Monto a depositar";
-            label10.Visible = true;
-            tbMontoOperacion.Visible = true;
-            btnConfirmarOperacion.Visible = true;
-            btnConfirmarOperacion.Enabled = true;
-            operacion = 2;
-        }
-
-        private void btnConfirmarOperacion_Click(object sender, EventArgs e)
-        {
-            int extraccion = 1;
-            int deposito = 2;
-            bool resultadoOperacion = false;
-            decimal monto = decimal.Parse(tbMontoOperacion.Text);
-            if (operacion == extraccion && monto <= cuenta.GetDisponible() && monto > 0)
+            string cuit = tbCuitBuscado.Text;
+            bool largoValido = cuit.Length == 13 || cuit.Length == 12;
+            bool formatoValido = false; 
+            try
             {
-                cuenta.Saldo -= monto;
-                resultadoOperacion=true;
+                Int64 numero = Int64.Parse(cuit.Replace("-",""));
+                formatoValido = (2 == cuit.Length - cuit.Replace("-","").Length);
             }
-            else if (operacion == deposito && monto > 0)
+            catch
             {
-                cuenta.Saldo += monto;
-                resultadoOperacion = true;
+                formatoValido = false;
             }
-            if (!resultadoOperacion)
+            if (largoValido && formatoValido)
             {
-                MessageBox.Show("Error en la operación");
+                btnOperarCliente.Enabled = true;
             }
             else
             {
-                tbMontoOperacion.Text = string.Empty;
-                montoDisponible.Text = cuenta.GetDisponible().ToString();
-                montoCuenta.Text = cuenta.Saldo.ToString();
-                MessageBox.Show("Operación exitosa. :)");
-                OperarCuenta();
+                btnOperarCliente.Enabled = false;
             }
         }
 
-        private void btnSimularPF_Click(object sender, EventArgs e)
+        private void tbMontoOperacion_TextChanged(object sender, EventArgs e)
         {
-            operacion = 3;
-            int simulacionPF = 3;
-            if (operacion == simulacionPF)
+            bool montoOperacionValido;
+            bool extraccionValida = false;
+            decimal monto;
+            try
             {
-                grupoMovimientos.Enabled = false;
-                btnSimulacionPF.Enabled = false;
-                btnAltaPF.Enabled = false;
-                tbMontoPF.Visible = true;
-                tbDuracionPf.Visible = true;
-                tbMontoPF.Text = string.Empty;
-                tbDuracionPf.Text = string.Empty;
-                label11.Visible = true;
-                label12.Visible = true;
-                btnSimularPF.Visible = true;
-
+                monto = decimal.Parse(tbMontoOperacion.Text);
+                montoOperacionValido = (monto > 0);
+                if (cuenta.GetType() == typeof(CuentaCorriente))
+                {
+                    CuentaCorriente cuentaCorriente = (CuentaCorriente)cuenta;
+                    extraccionValida = monto <= cuenta.ObtenerDisponible() + cuentaCorriente.MontoDescubierto;
+                }
+                else
+                {
+                    CajaAhorro cajaAhorro = (CajaAhorro)cuenta;
+                    extraccionValida = monto <= cajaAhorro.ObtenerDisponible();
+                }
             }
-        }
-
-        private void btnAltaPF_Click(object sender, EventArgs e)
-        {
-            operacion = 4;
-            int altaPF = 4;
-            if (operacion == altaPF)
+            catch
             {
-                grupoMovimientos.Enabled = false;
-                btnSimulacionPF.Enabled = false;
-                btnAltaPF.Enabled = false;
-                tbMontoPF.Visible = true;
-                tbDuracionPf.Visible = true;
-                tbMontoPF.Text = string.Empty;
-                tbDuracionPf.Text = string.Empty;
-                label11.Visible = true;
-                label12.Visible = true;
-                btnCrearPF.Visible = true;
-
+                montoOperacionValido = false;
             }
-        }
-
-        private void btnSimularPF_Click_1(object sender, EventArgs e)
-        {
-            MessageBox.Show("Contenido de la simulacion", "Simulación de plazo fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            tbDuracionPf.Text = String.Empty;
-            tbMontoPF.Text = String.Empty;
-            OperarCuenta();
-        }
-
-        private void btnCrearPF_Click(object sender, EventArgs e)
-        {
-            bool validado = false;
-            // check PF
-            if (validado)
-            {
-                MessageBox.Show("Plazo fijo creado de manera Exitosa", "Creación de Plazo Fijo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (montoOperacionValido)
+            { 
+                if(operacion == 1)
+                {
+                    if (extraccionValida)
+                    {
+                        btnConfirmarOperacion.Enabled = true;
+                    }
+                    else
+                    {
+                        btnConfirmarOperacion.Enabled = false;
+                    }
+                }
+                else
+                {
+                    btnConfirmarOperacion.Enabled = true;
+                }
+                
             }
             else
             {
-                MessageBox.Show("Error al crear el plazo fijo", "Creación de Plazo Fijo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnConfirmarOperacion.Enabled = false;
             }
-            OperarCuenta();
         }
+
+
+
 
         //public static string file = @"C:\C#\Clientes.txt";
+
+
     }
 }

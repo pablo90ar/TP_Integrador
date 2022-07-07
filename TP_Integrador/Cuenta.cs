@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TP_Integrador;
 
 namespace TP_Integrador_app
 {
@@ -11,30 +10,34 @@ namespace TP_Integrador_app
     {
         private string nro;
         private decimal saldo;
-        private List<PlazoFijo> plazosfijos;
+        private List<PlazoFijo> plazosfijosCuenta;
         public string Nro { get => nro; }
         public decimal Saldo { get => saldo; set => saldo = value; }
 
-        public decimal GetDisponible()
+        public decimal ObtenerDisponible()
         {
             decimal disponible = Saldo;
-            if (plazosfijos != null)
+            if (plazosfijosCuenta != null)
             {
-                foreach (var plazoFijo in plazosfijos)
+                foreach (var plazoFijo in plazosfijosCuenta)
                 {
                     disponible -= plazoFijo.Monto;
                 }
             }
             return disponible;
-            
         }
-        public List<PlazoFijo> PlazoFijo { get => plazosfijos; }
+        public List<PlazoFijo> PlazosFijos { get => plazosfijosCuenta; }
+
+        public void AgrerarPlazoFijo(PlazoFijo plazoFijo)
+        {
+            plazosfijosCuenta.Add(plazoFijo);
+        }
 
         public Cuenta(string nroCuenta, decimal saldoCuenta)
         {
             nro = nroCuenta;
             saldo = saldoCuenta;
-            plazosfijos = null;
+            plazosfijosCuenta = new List<PlazoFijo>();
         }
     }
 }

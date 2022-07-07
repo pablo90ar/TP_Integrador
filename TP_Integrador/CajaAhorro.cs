@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TP_Integrador;
+using TP_Integrador_app;
 
 namespace TP_Integrador_app
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP_Integrador.Properties {
+namespace TP_Integrador_app.Properties {
     using System;
     
     
