@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
-    internal abstract class Cliente
+    public abstract class Cliente
     {
         private string cuit;
         private List<Cuenta> cuentas;

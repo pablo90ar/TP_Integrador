@@ -14,12 +14,12 @@ namespace TP_Integrador_app
 {
     public partial class Form1 : Form
     {
-        Banco banco;
-        Cliente cliente;
-        Cuenta cuenta;
-        int operacion;
-        bool montoValido;
-        bool duracionValida;
+        public static Banco banco;
+        public static Cliente cliente;
+        public static Cuenta cuenta;
+        public static int operacion;
+        public static bool montoValido;
+        public static bool duracionValida;
         public Form1()
         {
             InitializeComponent();
@@ -127,13 +127,13 @@ namespace TP_Integrador_app
                 if (cliente.GetType() == typeof(Persona))
                 {
                     Persona clientePersona = (Persona)cliente;
-                    tbxNombreCliente.Text = clientePersona.getFullName();
+                    tbxNombreCliente.Text = clientePersona.GetFullName();
                     cliente = clientePersona;
                 }
                 else if (cliente.GetType() == typeof(Empresa))
                 {
                     Empresa clienteEmpresa = (Empresa)cliente;
-                    tbxNombreCliente.Text = clienteEmpresa.getFullName();
+                    tbxNombreCliente.Text = clienteEmpresa.GetFullName();
                     cliente = clienteEmpresa;
                 }
                 listaCuentasCliente.Items.Clear();
@@ -156,8 +156,6 @@ namespace TP_Integrador_app
             {
                 MessageBox.Show("No se encontró el cliente con ese CUIT", "Error");
             }
-            //TablaDesdeArchivoTXT(file);
-            //dataGridView1.DataSource = TablaDesdeArchivoTXT(file);
         }
 
         private void BtnOperarCuenta_Click(object sender, EventArgs e)
@@ -291,7 +289,6 @@ namespace TP_Integrador_app
             int index = listaCuentasCliente.SelectedIndex;
             montoCuenta.Text = LeerMontoCuenta(index).ToString();
             cuenta = cliente.Cuentas[listaCuentasCliente.SelectedIndex];
-            List<PlazoFijo> plazosFijosCuenta = banco.BuscarPlazosFijosDeCuenta(cuenta.Nro);
             montoDisponible.Text = (decimal.Parse(montoCuenta.Text) - LeerMontoPlazoFijo(index)).ToString();
             MostrarDescubiertoSiExiste();
         }
@@ -366,7 +363,7 @@ namespace TP_Integrador_app
         {
             labelDesc.Visible = false;
             montoDescubierto.Visible = false;
-            CuentaCorriente cc = es_cc(cuenta);
+            CuentaCorriente cc = Es_cc(cuenta);
             if (cc != null)
             {
                 labelDesc.Visible = true;
@@ -386,7 +383,7 @@ namespace TP_Integrador_app
 
         }
 
-        private void tbMontoPF_TextChanged(object sender, EventArgs e)
+        private void TbMontoPF_TextChanged(object sender, EventArgs e)
         {
             decimal monto;
             try
@@ -406,10 +403,10 @@ namespace TP_Integrador_app
             {
                 montoValido = false;
             }
-            validacionPlazoFijo();            
+            ValidacionPlazoFijo();            
         }
         
-        private void tbDuracionPf_TextChanged(object sender, EventArgs e)
+        private void TbDuracionPf_TextChanged(object sender, EventArgs e)
         {
             int duracion;
             try
@@ -428,10 +425,10 @@ namespace TP_Integrador_app
             {
                 duracionValida = false;
             }
-            validacionPlazoFijo();
+            ValidacionPlazoFijo();
         }
 
-        private void validacionPlazoFijo()
+        private void ValidacionPlazoFijo()
         {
             if (montoValido && duracionValida)
             {
@@ -446,7 +443,7 @@ namespace TP_Integrador_app
             }
         }
 
-        private CuentaCorriente es_cc(Cuenta cuenta)
+        private CuentaCorriente Es_cc(Cuenta cuenta)
         {
             if (cuenta.GetType() == typeof(CuentaCorriente))
             {
@@ -456,62 +453,11 @@ namespace TP_Integrador_app
             return null;
         }
 
-
-        // TABLA //
-        private DataTable TablaDesdeArchivoTXT(string ubicacion, char separador = '|')
-        {
-            DataTable resultado;
-            //ubicacion = file;
-
-            string[] arregloLinea = File.ReadAllLines(ubicacion);
-            resultado = DesdeTabla(arregloLinea, separador);
-            return resultado;
-        }
-
-        private DataTable DesdeTabla(string[] arregloLinea, char separador)
-        {
-            DataTable dt = new DataTable();
-
-            for (int c = 1; c < arregloLinea.Length; c++)
-            {
-                if (tbCuitBuscado.Text == arregloLinea[c])
-                {
-                    AddColumnToTable(arregloLinea, separador, ref dt);
-                    AddRowToTable(arregloLinea, separador, ref dt);
-                }
-            }
-            return dt;
-        }
-
-        private void AddRowToTable(string[] value, char separador, ref DataTable dt)
-        {
-            for (int i = 1; i < value.Length; i++)
-            {
-                string[] values = value[i].Split(separador);
-                DataRow dr = dt.NewRow();
-                for (int j = 0; j < values.Length; j++)
-                {
-                    dr[j] = values[j];
-                }
-                dt.Rows.Add(dr);
-            }
-        }
-
-        private void AddColumnToTable(string[] columna, char separador, ref DataTable dt)
-        {
-            string[] columnas = columna[0].Split(separador);
-            foreach (string columnaNombre in columnas)
-            {
-                DataColumn dc = new DataColumn(columnaNombre, typeof(string));
-                dt.Columns.Add(dc);
-            }
-        }
-
-        private void tbCuitBuscado_TextChanged(object sender, EventArgs e)
+        private void TbCuitBuscado_TextChanged(object sender, EventArgs e)
         {
             string cuit = tbCuitBuscado.Text;
             bool largoValido = cuit.Length == 13 || cuit.Length == 12;
-            bool formatoValido = false; 
+            bool formatoValido; 
             try
             {
                 Int64 numero = Int64.Parse(cuit.Replace("-",""));
@@ -531,7 +477,7 @@ namespace TP_Integrador_app
             }
         }
 
-        private void tbMontoOperacion_TextChanged(object sender, EventArgs e)
+        private void TbMontoOperacion_TextChanged(object sender, EventArgs e)
         {
             bool montoOperacionValido;
             bool extraccionValida = false;
@@ -580,11 +526,10 @@ namespace TP_Integrador_app
             }
         }
 
-
-
-
-        //public static string file = @"C:\C#\Clientes.txt";
-
-
+        private void BtnMenuCrear_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+        }
     }
 }

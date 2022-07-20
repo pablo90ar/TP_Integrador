@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
-    internal abstract class Cuenta
+    public abstract class Cuenta
     {
         private string nro;
         private decimal saldo;

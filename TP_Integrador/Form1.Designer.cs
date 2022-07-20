@@ -186,6 +186,7 @@
             this.btnMenuCrear.TabIndex = 13;
             this.btnMenuCrear.Text = "Crear Cliente";
             this.btnMenuCrear.UseVisualStyleBackColor = true;
+            this.btnMenuCrear.Click += new System.EventHandler(this.BtnMenuCrear_Click);
             // 
             // tbCuitBuscado
             // 
@@ -195,7 +196,7 @@
             this.tbCuitBuscado.TabIndex = 14;
             this.tbCuitBuscado.Text = "30-52138786-2";
             this.tbCuitBuscado.Visible = false;
-            this.tbCuitBuscado.TextChanged += new System.EventHandler(this.tbCuitBuscado_TextChanged);
+            this.tbCuitBuscado.TextChanged += new System.EventHandler(this.TbCuitBuscado_TextChanged);
             // 
             // label3
             // 
@@ -377,7 +378,7 @@
             this.tbMontoOperacion.Size = new System.Drawing.Size(95, 20);
             this.tbMontoOperacion.TabIndex = 36;
             this.tbMontoOperacion.Visible = false;
-            this.tbMontoOperacion.TextChanged += new System.EventHandler(this.tbMontoOperacion_TextChanged);
+            this.tbMontoOperacion.TextChanged += new System.EventHandler(this.TbMontoOperacion_TextChanged);
             // 
             // label10
             // 
@@ -408,7 +409,7 @@
             this.tbMontoPF.Size = new System.Drawing.Size(95, 20);
             this.tbMontoPF.TabIndex = 39;
             this.tbMontoPF.Visible = false;
-            this.tbMontoPF.TextChanged += new System.EventHandler(this.tbMontoPF_TextChanged);
+            this.tbMontoPF.TextChanged += new System.EventHandler(this.TbMontoPF_TextChanged);
             // 
             // label11
             // 
@@ -524,7 +525,7 @@
             this.tbDuracionPf.Size = new System.Drawing.Size(95, 20);
             this.tbDuracionPf.TabIndex = 43;
             this.tbDuracionPf.Visible = false;
-            this.tbDuracionPf.TextChanged += new System.EventHandler(this.tbDuracionPf_TextChanged);
+            this.tbDuracionPf.TextChanged += new System.EventHandler(this.TbDuracionPf_TextChanged);
             // 
             // label12
             // 

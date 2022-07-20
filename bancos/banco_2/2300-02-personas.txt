@@ -1,0 +1,1 @@
+cuit|nombre|apellido|sueldoNeto|cuentas

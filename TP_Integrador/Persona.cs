@@ -23,7 +23,7 @@ namespace TP_Integrador_app
             this.sueldoNeto = sueldoNeto;
         }
 
-        public string getFullName()
+        public string GetFullName()
         {
             return nombre + " " + apellido;
         }

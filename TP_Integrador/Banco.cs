@@ -8,14 +8,14 @@ using System.Globalization;
 
 namespace TP_Integrador_app
 {
-    internal class Banco : IValidar
+    public class Banco : IValidar
     {
         private List<Cliente> clientes = new List<Cliente>();
         private List<Cuenta> cuentas = new List<Cuenta>();
         private List<PlazoFijo> plazosFijos = new List<PlazoFijo>();
 
-        private string nombreBanco;
-        private string nombreSucursal;
+        public string nombreBanco;
+        public string nombreSucursal;
 
         public string NombreSucursal { get => nombreSucursal; }
 
@@ -94,8 +94,15 @@ namespace TP_Integrador_app
                             }
                         }
                     }
-                    Cliente nuevoCliente = new Persona(cuit, nombre, apellido, sueldoNeto, cuentasCliente);
-                    clientes.Add(nuevoCliente);
+                    string directorioRecibos = Path.Combine(directorioSucursales, @"recibos_sueldo\");
+                    bool recibo_1_ok = File.Exists(directorioRecibos + "suc" + nombreSucursal + "_recibo_" + cuit + "_1.pdf");
+                    bool recibo_2_ok = File.Exists(directorioRecibos + "suc" + nombreSucursal + "_recibo_" + cuit + "_2.pdf");
+                    bool recibo_3_ok = File.Exists(directorioRecibos + "suc" + nombreSucursal + "_recibo_" + cuit + "_3.pdf");
+                    if (recibo_1_ok && recibo_2_ok && recibo_3_ok)
+                    {
+                        Cliente nuevoCliente = new Persona(cuit, nombre, apellido, sueldoNeto, cuentasCliente);
+                        clientes.Add(nuevoCliente);
+                    }
                 }
             }
 
@@ -126,21 +133,41 @@ namespace TP_Integrador_app
                             }
                         }
                     }
-                    Cliente nuevoCliente = new Empresa(cuit, razonSocial, condIVA, nroIIBB, cuentasCliente);
-                    clientes.Add(nuevoCliente);
+                    string directorioBalances = Path.Combine(directorioSucursales, @"balances\");
+                    bool balance_ok = File.Exists(directorioBalances + "suc" + nombreSucursal + "_bal_" + cuit + ".zip");
+                    string directorioActas = Path.Combine(directorioSucursales, @"actas\");
+                    bool acta_ok = File.Exists(directorioActas + "suc" + nombreSucursal + "_acta_" + cuit + ".pdf");
+                    if (balance_ok && acta_ok)
+                    {
+                        Cliente nuevoCliente = new Empresa(cuit, razonSocial, condIVA, nroIIBB, cuentasCliente);
+                        clientes.Add(nuevoCliente);
+                    }
+                    
                 }
             }
 
         }
 
-        public bool AgregarCliente()
+        public void AgregarCliente(Cliente cliente)
         {
-            return true;
+            clientes.Add(cliente);
+        }
+
+        public void AgregarCuentaCorriente(string nroCuenta, decimal descubierto = 0)
+        {
+            Cuenta nuevaCuentaCorriente = new CuentaCorriente(nroCuenta, 0, descubierto);
+            cuentas.Add(nuevaCuentaCorriente);
+        }
+
+        public void AgregarCajaAhorro(string nroCuenta)
+        {
+            Cuenta nuevaCajaAhorro = new CajaAhorro(nroCuenta, 0);
+            cuentas.Add(nuevaCajaAhorro);
         }
 
         public Cliente BuscarCliente(string cuit)
         {
-            foreach (var cliente in clientes)
+            foreach (Cliente cliente in clientes)
             {
                 if (cliente.Cuit == cuit)
                 {
@@ -148,6 +175,28 @@ namespace TP_Integrador_app
                 }
             }
             return null;
+        }
+
+        public Cuenta BuscarCuenta(string nro)
+        {
+            foreach (Cuenta cuenta in cuentas)
+            {
+                if(cuenta.Nro == nro)
+                {
+                    return cuenta;
+                }
+            }
+            return null;
+        }
+
+        public string NumCuentaNueva()
+        {
+            int numCuentaNueva = 1;
+            while (BuscarCuenta(numCuentaNueva.ToString().PadLeft(13, '0')) != null)
+            {
+                numCuentaNueva++;
+            }
+            return numCuentaNueva.ToString().PadLeft(13, '0');
         }
 
         public List<PlazoFijo> BuscarPlazosFijosDeCuenta(string nroCuenta)

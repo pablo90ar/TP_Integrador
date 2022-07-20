@@ -22,7 +22,7 @@ namespace TP_Integrador_app
             this.nroIIBB = nroIIBB;
         }
 
-        public string getFullName()
+        public string GetFullName()
         {
             return razonSocial;
         }

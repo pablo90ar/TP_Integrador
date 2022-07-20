@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP_Integrador_app
 {
-    internal class PlazoFijo
+    public class PlazoFijo
     {
         private string cuenta;
         private decimal monto;

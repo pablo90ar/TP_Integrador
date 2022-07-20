@@ -1,0 +1,1 @@
+nroCuenta|tipo|saldo|descubierto

@@ -1,1 +1,0 @@
-cuit|razonSocial|condicionIva|nroIIBB|actaSocios(nombre PDF)|ultimoBalance
