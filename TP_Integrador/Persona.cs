@@ -8,8 +8,8 @@ namespace TP_Integrador_app
 {
     internal class Persona : Cliente
     {
-        string nombre;
-        string apellido;
+        readonly string nombre;
+        readonly string apellido;
         decimal sueldoNeto;
 
         public string Nombre { get => nombre; }

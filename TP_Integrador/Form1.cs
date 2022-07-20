@@ -88,7 +88,8 @@ namespace TP_Integrador_app
 
         private void BtnMenuSaldo_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Saldo en tesorería: $400.00", "Tesorería");
+            string saldoBanco = banco.SaldoTesoreria().ToString();
+            MessageBox.Show("Saldo en tesorería: $" + saldoBanco + ".", "Tesorería");
         }
 
         private void BtnMenuOperar_Click(object sender, EventArgs e)
@@ -215,7 +216,9 @@ namespace TP_Integrador_app
                 montoCuenta.Text = cuenta.Saldo.ToString();
                 MessageBox.Show("Operación exitosa. :)");
                 OperarCuenta();
+                banco.PersistirDatos();
             }
+            
         }
 
         private void BtnSimulacionPF_Click(object sender, EventArgs e)
@@ -281,6 +284,7 @@ namespace TP_Integrador_app
             tbDuracionPf.Text = String.Empty;
             tbMontoPF.Text = String.Empty;
             OperarCuenta();
+            banco.PersistirDatos();
         }
 
 

@@ -10,9 +10,9 @@ namespace TP_Integrador_app
 {
     public class Banco : IValidar
     {
-        private List<Cliente> clientes = new List<Cliente>();
-        private List<Cuenta> cuentas = new List<Cuenta>();
-        private List<PlazoFijo> plazosFijos = new List<PlazoFijo>();
+        private readonly List<Cliente> clientes = new List<Cliente>();
+        private readonly List<Cuenta> cuentas = new List<Cuenta>();
+        private readonly List<PlazoFijo> plazosFijos = new List<PlazoFijo>();
 
         public string nombreBanco;
         public string nombreSucursal;
@@ -215,7 +215,12 @@ namespace TP_Integrador_app
 
         public decimal SaldoTesoreria()
         {
-            return 10;
+            decimal saldoTesoreria = 0;
+            foreach (Cuenta cuenta in cuentas)
+            {
+                saldoTesoreria += cuenta.Saldo;
+            }
+            return saldoTesoreria;
         }
 
         public void OperarCliente()

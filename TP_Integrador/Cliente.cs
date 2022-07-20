@@ -8,8 +8,8 @@ namespace TP_Integrador_app
 {
     public abstract class Cliente
     {
-        private string cuit;
-        private List<Cuenta> cuentas;
+        private readonly string cuit;
+        private readonly List<Cuenta> cuentas;
 
         public string Cuit { get => cuit; }
         public List<Cuenta> Cuentas { get => cuentas; }
