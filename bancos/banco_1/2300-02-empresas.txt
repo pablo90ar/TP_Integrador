@@ -1,3 +1,9 @@
-cuit|razonSocial|condicionIva|nroIIBB|actaSocios(nombre PDF)|ultimoBalance
-acta_banco_sucursal_cuit.pdf
-balance_banco_sucursal_cuit.pdf
+30-68438692-8|Grana SA|inscripto|9217445161|1
+30-50457726-7|Mahle SA|inscripto|9217405553|2
+30-50462425-7|Basso SA|inscripto|9217403524|3
+30-52138786-2|Cormoran SA|inscripto|9217408300|4,5
+30-50160121-3|Suc. de Alfredo Williner SA|inscripto|9217403609|5
+30-57301217-4|Club 9 de Julio|exento|0410408593|6
+30-62282806-1|Club Sportivo Ben Hur|exento|0410385511|7
+30-57179658-5|Baicat Hogar SRL|inscripto|0410047844|8
+30-52162910-6|Limansky SA|inscripto|9217405712|9

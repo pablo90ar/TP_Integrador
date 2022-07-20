@@ -189,6 +189,7 @@ namespace TP_Integrador_app
                     Persona nuevoCliente = new Persona(tbCuitPersona.Text, tbNombre.Text, tbApellido.Text, sueldoNeto, cuentasNuevoCliente);
                     Form1.banco.AgregarCliente(nuevoCliente);
                     MessageBox.Show("Creación de persona "+ nuevoCliente.GetFullName() +" exitosa!", "Creación de PERSONA", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Form1.banco.PersistirDatos();
                 }
                 else
                 {
@@ -213,6 +214,7 @@ namespace TP_Integrador_app
 
                     Empresa nuevoCliente = new Empresa(tbCuitEmpresa.Text, tbRazonSocial.Text, condicionIva, tbIibb.Text, cuentasNuevoCliente);
                     Form1.banco.AgregarCliente(nuevoCliente);
+                    Form1.banco.PersistirDatos();
                     MessageBox.Show("Creación de empresa "+ nuevoCliente.GetFullName() +" exitosa!", "Creación de EMPRESA", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -220,7 +222,6 @@ namespace TP_Integrador_app
                     MessageBox.Show("Error en la creación de la empresa. Verifique los campos", "Creación de EMPRESA", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
         private void RbCajaAhorro_CheckedChanged(object sender, EventArgs e)

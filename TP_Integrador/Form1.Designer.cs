@@ -42,7 +42,6 @@
             this.tbCuitBuscado = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnOperarCliente = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnVolverAlBanco = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -71,7 +70,6 @@
             this.grupoPlazoFijo = new System.Windows.Forms.GroupBox();
             this.tbDuracionPf = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.grupoCuenta.SuspendLayout();
             this.grupoMovimientos.SuspendLayout();
             this.grupoPlazoFijo.SuspendLayout();
@@ -138,11 +136,11 @@
             // btnSalir
             // 
             this.btnSalir.Enabled = false;
-            this.btnSalir.Location = new System.Drawing.Point(12, 643);
+            this.btnSalir.Location = new System.Drawing.Point(12, 425);
             this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(115, 23);
+            this.btnSalir.Size = new System.Drawing.Size(115, 28);
             this.btnSalir.TabIndex = 7;
-            this.btnSalir.Text = "Salir del Banco";
+            this.btnSalir.Text = "Guardar y Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
@@ -151,7 +149,7 @@
             this.btnMenuSaldo.Enabled = false;
             this.btnMenuSaldo.Location = new System.Drawing.Point(12, 206);
             this.btnMenuSaldo.Name = "btnMenuSaldo";
-            this.btnMenuSaldo.Size = new System.Drawing.Size(115, 41);
+            this.btnMenuSaldo.Size = new System.Drawing.Size(115, 30);
             this.btnMenuSaldo.TabIndex = 10;
             this.btnMenuSaldo.Text = "Saldo Tesorería";
             this.btnMenuSaldo.UseVisualStyleBackColor = true;
@@ -169,9 +167,9 @@
             // btnMenuOperar
             // 
             this.btnMenuOperar.Enabled = false;
-            this.btnMenuOperar.Location = new System.Drawing.Point(12, 253);
+            this.btnMenuOperar.Location = new System.Drawing.Point(12, 239);
             this.btnMenuOperar.Name = "btnMenuOperar";
-            this.btnMenuOperar.Size = new System.Drawing.Size(115, 41);
+            this.btnMenuOperar.Size = new System.Drawing.Size(115, 32);
             this.btnMenuOperar.TabIndex = 12;
             this.btnMenuOperar.Text = "Operar Cliente";
             this.btnMenuOperar.UseVisualStyleBackColor = true;
@@ -180,9 +178,9 @@
             // btnMenuCrear
             // 
             this.btnMenuCrear.Enabled = false;
-            this.btnMenuCrear.Location = new System.Drawing.Point(12, 300);
+            this.btnMenuCrear.Location = new System.Drawing.Point(12, 277);
             this.btnMenuCrear.Name = "btnMenuCrear";
-            this.btnMenuCrear.Size = new System.Drawing.Size(115, 41);
+            this.btnMenuCrear.Size = new System.Drawing.Size(115, 30);
             this.btnMenuCrear.TabIndex = 13;
             this.btnMenuCrear.Text = "Crear Cliente";
             this.btnMenuCrear.UseVisualStyleBackColor = true;
@@ -190,7 +188,7 @@
             // 
             // tbCuitBuscado
             // 
-            this.tbCuitBuscado.Location = new System.Drawing.Point(12, 384);
+            this.tbCuitBuscado.Location = new System.Drawing.Point(12, 338);
             this.tbCuitBuscado.Name = "tbCuitBuscado";
             this.tbCuitBuscado.Size = new System.Drawing.Size(115, 20);
             this.tbCuitBuscado.TabIndex = 14;
@@ -201,7 +199,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 368);
+            this.label3.Location = new System.Drawing.Point(15, 322);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 15;
@@ -210,7 +208,7 @@
             // 
             // btnOperarCliente
             // 
-            this.btnOperarCliente.Location = new System.Drawing.Point(12, 410);
+            this.btnOperarCliente.Location = new System.Drawing.Point(12, 364);
             this.btnOperarCliente.Name = "btnOperarCliente";
             this.btnOperarCliente.Size = new System.Drawing.Size(115, 23);
             this.btnOperarCliente.TabIndex = 16;
@@ -219,17 +217,9 @@
             this.btnOperarCliente.Visible = false;
             this.btnOperarCliente.Click += new System.EventHandler(this.BtnOperarCliente_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(159, 517);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(763, 149);
-            this.dataGridView1.TabIndex = 17;
-            // 
             // btnVolverAlBanco
             // 
-            this.btnVolverAlBanco.Location = new System.Drawing.Point(12, 439);
+            this.btnVolverAlBanco.Location = new System.Drawing.Point(12, 393);
             this.btnVolverAlBanco.Name = "btnVolverAlBanco";
             this.btnVolverAlBanco.Size = new System.Drawing.Size(115, 23);
             this.btnVolverAlBanco.TabIndex = 17;
@@ -541,11 +531,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(947, 688);
+            this.ClientSize = new System.Drawing.Size(947, 469);
             this.Controls.Add(this.grupoPlazoFijo);
             this.Controls.Add(this.grupoMovimientos);
             this.Controls.Add(this.grupoCuenta);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnVolverAlBanco);
             this.Controls.Add(this.btnOperarCliente);
             this.Controls.Add(this.label3);
@@ -564,7 +553,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.grupoCuenta.ResumeLayout(false);
             this.grupoCuenta.PerformLayout();
             this.grupoMovimientos.ResumeLayout(false);
@@ -592,7 +580,6 @@
         private System.Windows.Forms.TextBox tbCuitBuscado;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnOperarCliente;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnVolverAlBanco;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;

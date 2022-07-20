@@ -16,6 +16,11 @@ namespace TP_Integrador_app
         public string Cuenta { get => cuenta; }
         public decimal Monto { get => monto; }
         public DateTime FechaInicio { get => fechaInicio; }
+
+        public string FechaInicioFormateada()
+        {
+            return fechaInicio.Year.ToString() + fechaInicio.Month.ToString().PadLeft(2, '0') + fechaInicio.Day.ToString().PadLeft(2, '0');
+        }
         public int Duracion { get => duracion; }
         public PlazoFijo (string cuentaOrigen, decimal monto, int duracion)
         {

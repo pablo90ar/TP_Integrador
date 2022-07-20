@@ -33,7 +33,7 @@ namespace TP_Integrador_app
                 while ((datos_plazofijo = sr_plazosFijos.ReadLine()) != null)
                 {
                     string[] campos = datos_plazofijo.Split('|');
-                    string nroCuenta = campos[0].Split('-')[0];
+                    string nroCuenta = campos[0];
                     decimal monto = decimal.Parse(campos[1]);
                     int duracion = int.Parse(campos[2]);
                     DateTime fechaInicio = DateTime.ParseExact(campos[3], "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -48,8 +48,9 @@ namespace TP_Integrador_app
                 while((datos_cuenta = sr_cuentas.ReadLine()) != null)
                 {
                     string[] campos = datos_cuenta.Split('|');
-                    string nroCuenta = campos[0].Split('-')[0];
-                    string tipo = campos[0].Split('-')[1];
+                    string[] camposCuenta = campos[0].Split('-');
+                    string nroCuenta = camposCuenta[0];
+                    string tipo = camposCuenta[1];
                     decimal saldo = decimal.Parse(campos[1]);
                     Cuenta nuevaCuenta;
                     if (tipo == "01")
@@ -235,6 +236,82 @@ namespace TP_Integrador_app
         public bool ValidarCuit(string cuitValidable)
         {
             throw new NotImplementedException();
+        }
+
+        public void PersistirDatos()
+        {
+            string dirProyecto = AppDomain.CurrentDomain.BaseDirectory;
+            string directorioSucursales = Path.Combine(dirProyecto, @"..\..\..\bancos\" + this.nombreBanco + @"\");
+
+            using (StreamWriter sw_plazosFijos = new StreamWriter(directorioSucursales + nombreSucursal + "-plazosfijos.txt"))
+            {
+                string linea;
+                foreach (PlazoFijo plazoFijo in plazosFijos)
+                {
+                    linea = plazoFijo.Cuenta + "|" + plazoFijo.Monto.ToString() + "|" + plazoFijo.Duracion.ToString() + "|" + plazoFijo.FechaInicioFormateada();
+                    sw_plazosFijos.WriteLine(linea);
+                }
+            }
+
+            using (StreamWriter sw_cuentas = new StreamWriter(directorioSucursales + nombreSucursal + "-cuentas.txt"))
+            {
+                string linea;
+                foreach (Cuenta cuenta in cuentas)
+                {
+                    string tipoCuenta = "01";
+                    string descubierto = "";
+                    if (cuenta.GetType() == typeof(CuentaCorriente))
+                    {
+                        tipoCuenta = "01";
+                        CuentaCorriente cuentaCorriente = (CuentaCorriente)cuenta;
+                        descubierto = cuentaCorriente.MontoDescubierto.ToString();
+                    }
+                    if (cuenta.GetType() == typeof(CajaAhorro))
+                    {
+                        tipoCuenta = "02";
+                        descubierto = "";
+                    }
+                    linea = cuenta.Nro + "-" + tipoCuenta + "|" + cuenta.Saldo.ToString() + "|" + descubierto;
+                    sw_cuentas.WriteLine(linea);
+                }
+            }
+            
+            using (StreamWriter sw_personas = new StreamWriter(directorioSucursales + nombreSucursal + "-personas.txt"))
+            {
+                string linea;
+                foreach (Cliente cliente in clientes)
+                {
+                    if (cliente.GetType() == typeof(Persona))
+                    {
+                        Persona persona = (Persona)cliente;
+                        linea = persona.Cuit + "|" + persona.Nombre + "|" + persona.Apellido + "|" + persona.SueldoNeto.ToString() + "|" + persona.CuentasCsv();
+                        sw_personas.WriteLine(linea);
+                    }
+                }
+            }
+            
+            using (StreamWriter sw_empresas = new StreamWriter(directorioSucursales + nombreSucursal + "-empresas.txt"))
+            {
+                string linea;
+                foreach (Cliente cliente in clientes)
+                {
+                    if (cliente.GetType() == typeof(Empresa))
+                    {
+                        Empresa empresa = (Empresa)cliente;
+                        string condicionIVA;
+                        if (empresa.CondIVA)
+                        {
+                            condicionIVA = "inscripto";
+                        }
+                        else
+                        {
+                            condicionIVA = "exento";
+                        }
+                        linea = empresa.Cuit + "|" + empresa.RazonSocial + "|" + condicionIVA + "|" + empresa.NroIIBB + "|" + empresa.CuentasCsv();
+                        sw_empresas.WriteLine(linea);
+                    }
+                }
+            }
         }
     }
 }

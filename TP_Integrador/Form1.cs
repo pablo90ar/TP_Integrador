@@ -83,6 +83,7 @@ namespace TP_Integrador_app
             btnCargarBanco.Enabled = true;
             listaSucursales.Items.Clear();
             ActivarMenu(false);
+            banco.PersistirDatos();
         }
 
         private void BtnMenuSaldo_Click(object sender, EventArgs e)

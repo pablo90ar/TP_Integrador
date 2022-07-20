@@ -14,25 +14,20 @@ namespace TP_Integrador_app
         public string Cuit { get => cuit; }
         public List<Cuenta> Cuentas { get => cuentas; }
 
+        public string CuentasCsv()
+        {
+            string listaCuentas = "";
+            foreach (Cuenta cuenta in Cuentas)
+            {
+                listaCuentas += int.Parse(cuenta.Nro).ToString() + ",";
+            }
+            return listaCuentas.Remove(listaCuentas.Length - 1);
+        }
+
         public Cliente(string cuit, List<Cuenta> cuentas)
         {
             this.cuit = cuit;
             this.cuentas = cuentas;
-        }
-
-        public bool CrearCuenta()
-        {
-            return true;
-        }
-
-        public bool AgregarTitular(Cliente nuevoTitular, Cuenta cuenta)
-        {
-            return true;
-        }
-
-        public decimal Saldo(string nroCuenta)
-        {
-            return 0;
         }
     }
 }
